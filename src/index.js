@@ -9,7 +9,7 @@ import SignIn from './Pages/SignIn';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SignUp />
+    <App />
   </React.StrictMode>
 );
 
