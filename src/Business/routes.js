@@ -15,7 +15,7 @@ export const routes = [
     icon: <DashboardIcon />
   },
   {
-    title: "My Job Posts",
+    title: "Job Posts",
     link: "/job-posts",
     icon:<WorkIcon />
   },
@@ -30,12 +30,12 @@ export const routes = [
     icon: <LocalOfferOutlinedIcon />
   },
   {
-    title: "My Profile",
+    title: "Profile",
     link: "/profile",
     icon: <AccountCircleIcon />
   },
   {
-    title: "My Company",
+    title: "Company",
     link: "/company-profile",
     icon: <BusinessCenterIcon />
   },

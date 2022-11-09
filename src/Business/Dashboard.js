@@ -1,6 +1,11 @@
-import { Paper, Stack } from "@mui/material";
+import { useHistory } from "react-router-dom";
+import { Paper, Stack, Typography } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function Dashboard() {
+  const history = useHistory();
+
+
   return (
     <Stack
       direction={"row"}
@@ -10,8 +15,7 @@ function Dashboard() {
         height: "calc(100vh - 64px)",
         maxHeight: "calc(100vh - 64px)",
       }}
-    >
-      {/* bgcolor: "#121212" */}
+    > 
       <Paper
         sx={{
           backgroundColor: "#5C95F7",
@@ -27,7 +31,24 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-      ></Paper>
+        onClick={()=>history.push("/applicants")}
+      >
+        <Stack height="100%" justifyContent={"space-between"} p={3}>
+          <Typography></Typography>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            p={0}
+            alignItems={"center"}
+            color="white"
+          >
+            <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
+              Pending Offers
+            </Typography>
+            <ArrowForwardIcon fontSize="large" />
+          </Stack>
+        </Stack>
+      </Paper>
       <Paper
         sx={{
           backgroundColor: "#5C95F7",
@@ -42,7 +63,24 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-      ></Paper>
+        onClick={()=>history.push("/new-job-post")}
+      >
+        <Stack height="100%" justifyContent={"space-between"} p={3}>
+          <Typography></Typography>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            p={0}
+            alignItems={"center"}
+            color="white"
+          >
+            <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
+              Create Job Post
+            </Typography>
+            <ArrowForwardIcon fontSize="large" />
+          </Stack>
+        </Stack>
+      </Paper>
       <Paper
         sx={{
           backgroundColor: "#5C95F7",
@@ -57,10 +95,26 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-      ></Paper>
+        onClick={()=>history.push("/job-posts")}
+      >
+        <Stack height="100%" justifyContent={"space-between"} p={3}>
+          <Typography></Typography>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            p={0}
+            alignItems={"end"}
+            color="white"
+          >
+            <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
+              View Job Postings
+            </Typography>
+            <ArrowForwardIcon fontSize="large" />
+          </Stack>
+        </Stack>
+      </Paper>
     </Stack>
   );
 }
 
 export default Dashboard;
-
