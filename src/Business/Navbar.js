@@ -112,7 +112,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Navbar(props) {
-  const [toolbarHeader, setToolbarHeader] = useState("Chat");
+  const [toolbarHeader, setToolbarHeader] = useState("Home");
   const [darkMode, setDarkMode] = useState(false);
   const history = useHistory();
 
