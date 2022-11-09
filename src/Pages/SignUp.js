@@ -18,7 +18,7 @@ import {
   InputLabel,
   MenuItem,
   FormHelperText,
-  Select
+  Select,
 } from "@mui/material";
 
 function Copyright(props) {
@@ -50,14 +50,14 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const formInput = {
-      firstName: data.get('firstName'),
-      firstName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-      role: data.get('role'),
-      businessName: data.get('businessName'),
-      businessIndustry: data.get('businessIndustry'),
-    }
+      firstName: data.get("firstName"),
+      firstName: data.get("lastName"),
+      email: data.get("email"),
+      password: data.get("password"),
+      role: data.get("role"),
+      businessName: data.get("businessName"),
+      businessIndustry: data.get("businessIndustry"),
+    };
     console.log(formInput);
   };
 
@@ -158,7 +158,9 @@ export default function SignUp() {
                     name="role"
                   >
                     <MenuItem value={"freelance"}>Freelancer</MenuItem>
-                    <MenuItem value={"business"}>Business owner/freelancer</MenuItem>
+                    <MenuItem value={"business"}>
+                      Business owner/freelancer
+                    </MenuItem>
                   </Select>
                   <FormHelperText>
                     Will you be using this website as a Freelancer or Business
@@ -166,7 +168,12 @@ export default function SignUp() {
                   </FormHelperText>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6} sx={{ display: role==="business" ? "inline" : "none" }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: role === "business" ? "inline" : "none" }}
+              >
                 <TextField
                   name="businessName"
                   required
@@ -177,7 +184,12 @@ export default function SignUp() {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6} sx={{ display: role==="business" ? "inline" : "none" }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: role === "business" ? "inline" : "none" }}
+              >
                 <TextField
                   required
                   fullWidth
