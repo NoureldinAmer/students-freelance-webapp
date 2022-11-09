@@ -1,56 +1,68 @@
-import React, {useState} from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Badge from '@mui/material/Badge';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { createAvatar } from '@dicebear/avatars';
-import * as style from '@dicebear/avatars-initials-sprites';
-
-
+import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Badge from "@mui/material/Badge";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  Select
+} from "@mui/material";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://github.com/NoureldinAmer">
         Nour Amer
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const theme = createTheme();
 
-let svg = createAvatar(style, {
-  seed: 'custom-seed',
-  // ... and other options
-});
-
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-
+  const [role, setRole] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const formInput = {
+      firstName: data.get('firstName'),
+      firstName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+      role: data.get('role'),
+      businessName: data.get('businessName'),
+      businessIndustry: data.get('businessIndustry'),
+    }
+    console.log(formInput);
+  };
+
+  const handleChange = (event) => {
+    setRole(event.target.value);
   };
 
   return (
@@ -60,22 +72,32 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ 
-              m: 1, 
-              width: '75px',
-              height: '75px',
-              }}>
-            <img src={`https://avatars.dicebear.com/api/initials/${firstName} ${lastName}.svg?scale=110`} alt="initials" />
+          <Avatar
+            sx={{
+              m: 1,
+              width: "75px",
+              height: "75px",
+            }}
+          >
+            <img
+              src={`https://avatars.dicebear.com/api/initials/${firstName} ${lastName}.svg?scale=110`}
+              alt="initials"
+            />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -89,6 +111,7 @@ export default function SignUp() {
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -119,6 +142,48 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl sx={{ minWidth: 120, width: "100%" }}>
+                  <InputLabel id="demo-simple-select-helper-label">
+                    Role
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={role}
+                    label="Role"
+                    onChange={handleChange}
+                    name="role"
+                  >
+                    <MenuItem value={"freelance"}>Freelancer</MenuItem>
+                    <MenuItem value={"business"}>Business owner/freelancer</MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    Will you be using this website as a Freelancer or Business
+                    owner/hiring manager?
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{ display: role==="business" ? "inline" : "none" }}>
+                <TextField
+                  name="businessName"
+                  required
+                  fullWidth
+                  id="businessName"
+                  label="Business Name"
+                  autoFocus
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6} sx={{ display: role==="business" ? "inline" : "none" }}>
+                <TextField
+                  required
+                  fullWidth
+                  id="businessIndustry"
+                  label="Business Industry"
+                  name="businessIndustry"
                 />
               </Grid>
             </Grid>
