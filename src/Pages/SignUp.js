@@ -20,6 +20,7 @@ import {
   FormHelperText,
   Select,
 } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -45,6 +46,8 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("");
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,6 +62,9 @@ export default function SignUp() {
       businessIndustry: data.get("businessIndustry"),
     };
     console.log(formInput);
+    localStorage.setItem('role', formInput.role);
+    forceUpdate();
+    history.push("/");
   };
 
   const handleChange = (event) => {

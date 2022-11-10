@@ -2,7 +2,7 @@ import React from 'react'
 
 function Company() {
   return (
-    <div>Company</div>
+    <div>Company Profile</div>
   )
 }
 

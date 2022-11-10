@@ -1,10 +1,11 @@
 import { useHistory } from "react-router-dom";
 import { Paper, Stack, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useEffect } from "react";
 
 function Dashboard() {
   const history = useHistory();
-
+  //window.location.reload(false);
   return (
     <Stack
       direction={"row"}
@@ -44,7 +45,7 @@ function Dashboard() {
             color="white"
           >
             <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
-              Pending Offers
+              Apply
             </Typography>
             <ArrowForwardIcon fontSize="large" />
           </Stack>
@@ -78,7 +79,7 @@ function Dashboard() {
             color="white"
           >
             <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
-              Create Job Post
+              Explore New Jobs
             </Typography>
             <ArrowForwardIcon fontSize="large" />
           </Stack>
@@ -112,7 +113,7 @@ function Dashboard() {
             color="white"
           >
             <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
-              View Job Postings
+              View My Offers
             </Typography>
             <ArrowForwardIcon fontSize="large" />
           </Stack>

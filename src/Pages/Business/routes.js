@@ -6,9 +6,10 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CreateIcon from '@mui/icons-material/Create';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import SearchIcon from '@mui/icons-material/Search';
 
 
-export const routes = [
+const BusinessRoutes = [
   {
     title: "Dashboard",
     link: "/",
@@ -39,5 +40,34 @@ export const routes = [
     link: "/company-profile",
     icon: <BusinessCenterIcon />
   },
-  
 ]
+
+const FreelanceRoutes = [
+  {
+    title: "Dashboard",
+    link: "/",
+    icon: <DashboardIcon />
+  },
+  {
+    title: "Apply",
+    link: "/apply",
+    icon: <CreateIcon />
+  },
+  {
+    title: "Explore Jobs",
+    link: "/job-posts",
+    icon:<SearchIcon />
+  },
+  {
+    title: "Offers",
+    link: "/offers",
+    icon: <LocalOfferOutlinedIcon />
+  },
+  {
+    title: "Profile",
+    link: "/profile",
+    icon: <AccountCircleIcon />
+  },
+]
+
+export {BusinessRoutes, FreelanceRoutes}
