@@ -4,7 +4,7 @@ import FreelanceJobPosts from './Freelance/JobPosts'
 
 function JobPosts() {
   return (
-    localStorage.getItem("role") === "freelance" ? <BusinessJobPost />: <FreelanceJobPosts />
+    localStorage.getItem("role") === "freelance" ? <FreelanceJobPosts /> :  <BusinessJobPost />
   )
 }
 
