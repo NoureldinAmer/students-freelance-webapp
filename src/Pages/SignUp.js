@@ -46,7 +46,6 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("");
-  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
   const history = useHistory();
 
   const handleSubmit = (event) => {
@@ -63,7 +62,6 @@ export default function SignUp() {
     };
     console.log(formInput);
     localStorage.setItem('role', formInput.role);
-    forceUpdate();
     history.push("/");
   };
 
@@ -165,7 +163,7 @@ export default function SignUp() {
                   >
                     <MenuItem value={"freelance"}>Freelancer</MenuItem>
                     <MenuItem value={"business"}>
-                      Business owner/freelancer
+                      Business owner/hiring manager
                     </MenuItem>
                   </Select>
                   <FormHelperText>

@@ -23,6 +23,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { ThemeProvider } from "@emotion/react";
 import { Paper } from "@mui/material";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -112,7 +113,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Navbar(props) {
   const [toolbarHeader, setToolbarHeader] = useState("Home");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('mode') === "true" ? true : false);
   const history = useHistory();
 
   const [open, setOpen] = useState(false);
@@ -315,7 +316,7 @@ export default function Navbar(props) {
                 }}
                 onClick={() => {
                   setDarkMode(!darkMode);
-                  console.log(theme);
+                  localStorage.setItem('mode', !darkMode);
                 }}
               >
                 <ListItemIcon

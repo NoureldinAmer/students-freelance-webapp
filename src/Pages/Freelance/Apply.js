@@ -1,4 +1,6 @@
-import React from 'react'
+import { Paper } from "@mui/material";
+import { Stack } from "@mui/system";
+import React from "react";
 
 function Apply() {
   return (
@@ -6,4 +8,4 @@ function Apply() {
   )
 }
 
-export default Apply
+export default Apply;
