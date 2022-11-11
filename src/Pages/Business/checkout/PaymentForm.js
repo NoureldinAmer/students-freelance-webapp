@@ -8,16 +8,13 @@ import TagsInput from './TagsInput';
 import { Box } from '@mui/system';
 
 export default function PaymentForm({formData}) {
-  const [tags, setTags] = useState(["Nodejs", "Ball"])
-
-
   return (
     <React.Fragment>
       <Typography variant="h4" mb={4}>
         Skills
       </Typography>
       <Box>
-      <TagsInput tags={tags} formData={formData}/>
+        <TagsInput tags={["Obama", "Balls"]} formData={formData} name={"skills"}/>
       </Box>
     </React.Fragment>
   );
