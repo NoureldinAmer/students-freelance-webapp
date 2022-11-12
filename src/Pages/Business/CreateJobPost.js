@@ -9,7 +9,7 @@ function CreateJobPost() {
         p: "40px",
         height: "calc(100vh - 64px)",
         maxHeight: "calc(100vh - 64px)",
-        overflow: "hidden"
+        overflow: "hidden",
       }}
       justifyContent="center"
       alignItems={"center"}

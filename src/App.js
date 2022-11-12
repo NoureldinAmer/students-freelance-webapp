@@ -14,6 +14,7 @@ import Profile from "./Pages/Profile";
 import CompanyProfile from "./Pages/CompanyProfile";
 import ErrorPage from "./Pages/ErrorPage";
 import Apply from "./Pages/Apply";
+import BasicModal from "./Pages/Modal";
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -30,6 +31,7 @@ function App() {
           <Route path="/signup" component={SignUp} />
           <Paper sx={{ boxShadow: "none", border: "none", borderRadius: 0 }}>
             <NavBar>
+              <BasicModal />
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/job-posts" component={JobPosts} />
