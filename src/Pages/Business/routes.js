@@ -1,5 +1,3 @@
-import ChatIcon from '@mui/icons-material/Chat';
-import HistoryIcon from '@mui/icons-material/History';
 import WorkIcon from '@mui/icons-material/Work';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
