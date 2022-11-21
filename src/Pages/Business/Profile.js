@@ -8,6 +8,7 @@ import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CreateIcon from "@mui/icons-material/Create";
+import LogoutIcon from '@mui/icons-material/Logout';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
@@ -41,7 +42,7 @@ function Profile() {
     >
       <CustomBox
         sx={{
-          width: 400,
+          width: 500,
           height: 500,
           boxShadow: 3,
           marginBottom: 10,
@@ -182,6 +183,26 @@ function Profile() {
                 onClick={() => history.push("/company-profile")}
               >
                 <BusinessCenterIcon fontSize="inherit" />
+              </CustomIconButton>
+            </Tooltip>
+            <Tooltip
+              title="sign out"
+              enterDelay={500}
+              enterNextDelay={500}
+            >
+              <CustomIconButton
+                size="large"
+                sx={{
+                  boxShadow: 2,
+                  transition: "0.3s",
+                  "&:hover": {
+                    boxShadow: 7,
+                    bgcolor: "inherit",
+                  },
+                }}
+                //onClick={() => history.push("/job-posts")}
+              >
+                <LogoutIcon fontSize="inherit" />
               </CustomIconButton>
             </Tooltip>
           </Stack>
