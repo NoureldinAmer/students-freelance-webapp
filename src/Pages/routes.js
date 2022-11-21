@@ -5,6 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CreateIcon from '@mui/icons-material/Create';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SearchIcon from '@mui/icons-material/Search';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 
 const BusinessRoutes = [
@@ -45,6 +46,11 @@ const FreelanceRoutes = [
     title: "Dashboard",
     link: "/",
     icon: <DashboardIcon />
+  },
+  {
+    title: "My Applications",
+    link: "/applications",
+    icon: <DescriptionIcon />
   },
   {
     title: "Apply",
