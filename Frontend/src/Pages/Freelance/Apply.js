@@ -21,6 +21,33 @@ import {
 import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 
+const CustomTextField = styled(TextField)(({ theme }) => ({
+  //borderColor: theme.palette.mode === "dark" ? "green" : "red",
+  "& .MuiInputBase-root": {
+    "&.Mui-focused fieldset": {
+      border:
+        theme.palette.mode === "dark" ? "2px solid white" : "2px solid black",
+    },
+  },
+  "& .MuiFormLabel-root": {
+    color: theme.palette.mode === "dark" ? "#BABAC2" : null,
+  },
+}));
+
+const CustomSelect = styled(Select)(({ theme }) => ({
+  "&.MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: theme.palette.mode === "dark" ? "#BABAC2" : null,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.mode === "dark" ? "white" : null,
+    },
+    "& .MuiFormLabel-root": {
+      color: theme.palette.mode === "dark" ? "red" : null,
+    },
+  },
+}));
+
 function Apply() {
   return (
     <Box
@@ -48,7 +75,7 @@ function Apply() {
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
+              <CustomTextField
                 autoComplete="given-name"
                 name="firstName"
                 required
@@ -61,7 +88,7 @@ function Apply() {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <TextField
+              <CustomTextField
                 required
                 fullWidth
                 id="lastName"
@@ -72,7 +99,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 required
                 fullWidth
                 id="email"
@@ -82,7 +109,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 required
                 fullWidth
                 name="phone"
@@ -93,10 +120,17 @@ function Apply() {
             </Grid>
             <Grid item xs={12}>
               <FormControl sx={{ minWidth: 120, width: "100%" }}>
-                <InputLabel id="demo-simple-select-helper-label">
+                <InputLabel
+                  id="demo-simple-select-helper-label"
+                  sx={{
+                    "&.Mui-focused": {
+                      color: "inherit",
+                    },
+                  }}
+                >
                   Years Of Experience
                 </InputLabel>
-                <Select
+                <CustomSelect
                   labelId="demo-simple-select-helper-label"
                   id="demo-simple-select-helper"
                   //value={role}
@@ -111,7 +145,7 @@ function Apply() {
                   <MenuItem value={"more than 8 months"}>
                     more than 8 months
                   </MenuItem>
-                </Select>
+                </CustomSelect>
                 <FormHelperText>
                   How many months/years of experience do you have in this
                   industry
@@ -123,7 +157,7 @@ function Apply() {
               <Typography variant="h5" mb={1}>
                 Links
               </Typography>
-              <TextField
+              <CustomTextField
                 required
                 fullWidth
                 id="linkdin"
@@ -133,7 +167,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 fullWidth
                 id="twitter"
                 label="Twitter URL"
@@ -142,7 +176,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 fullWidth
                 id="github"
                 label="GitHub URL"
@@ -151,7 +185,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 fullWidth
                 id="portfolio"
                 label="Portfolio URL"
@@ -160,7 +194,7 @@ function Apply() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <CustomTextField
                 fullWidth
                 id="other"
                 label="Other Website"
@@ -172,7 +206,7 @@ function Apply() {
               <Typography variant="h5" p={1}>
                 Additional Information
               </Typography>
-              <TextField
+              <CustomTextField
                 id="description"
                 name="description"
                 label="Add a cover letter"
