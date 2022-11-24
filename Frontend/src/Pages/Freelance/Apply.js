@@ -30,7 +30,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
     },
   },
   "& .MuiFormLabel-root": {
-    color: theme.palette.mode === "dark" ? "#BABAC2" : null,
+    color: theme.palette.mode === "dark" ? "white" : null,
   },
 }));
 
