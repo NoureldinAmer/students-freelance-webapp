@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
     let results = stmt.all(username, password);
     
     if(results.length !== 0) {
-      results[0].role = "freelancer";
+      results[0].role = "freelance";
       return res.status(200).json({
         message: "login successful",
         login_details: results[0]
