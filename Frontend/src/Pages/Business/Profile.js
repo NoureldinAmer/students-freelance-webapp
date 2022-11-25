@@ -31,7 +31,7 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
 function Profile() {
   const history = useHistory();
 
-  function handleLogout() {
+  const handleLogout = () => {
     localStorage.removeItem("role");
     localStorage.removeItem("id");
     localStorage.removeItem("username");
