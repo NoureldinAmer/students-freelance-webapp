@@ -5,7 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const cookies = require("cors");
 const { PORT, AccessControlAllowOrigin } = require("./config/");
-const { usersRouter } = require("./routes");
+const { usersRouter, loginRouter } = require("./routes");
 const { errorMiddleware } = require("./middlewares");
 const {createDatabase} = require('./utils/CreateDataBase')
 
@@ -22,6 +22,7 @@ app.use(morgan("tiny"));
 
 //This is where you should add your different endpoint handlers
 app.use("/users", usersRouter);
+app.use("/login", loginRouter);
 
 
 

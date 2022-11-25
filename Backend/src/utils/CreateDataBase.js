@@ -19,6 +19,8 @@ async function createDatabase() {
       }
     })
   })
+
+  db.close();
 }
 
 const sqlStatements = [
@@ -43,7 +45,7 @@ const sqlStatements = [
       Username VARCHAR(100) NOT NULL,
       YearsOfExperience INT,
       Email VARCHAR(100) NOT NULL,
-      PhoneNo INT NOT NULL,
+      PhoneNo VARCHAR(100),
       Password VARCHAR(100) NOT NULL,
       Location VARCHAR(100),
       Rating INT NOT NULL,
