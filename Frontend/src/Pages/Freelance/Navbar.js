@@ -113,7 +113,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Navbar(props) {
   const [toolbarHeader, setToolbarHeader] = useState("Home");
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('mode') === "true" ? true : false);
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('darkmode') === "true" ? true : false);
   const history = useHistory();
 
   const [open, setOpen] = useState(false);
@@ -316,7 +316,7 @@ export default function Navbar(props) {
                 }}
                 onClick={() => {
                   setDarkMode(!darkMode);
-                  localStorage.setItem('mode', !darkMode);
+                  localStorage.setItem('darkmode', !darkMode);
                 }}
               >
                 <ListItemIcon

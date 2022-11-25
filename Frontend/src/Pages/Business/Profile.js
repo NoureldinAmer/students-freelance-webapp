@@ -26,8 +26,18 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.mode === "dark" ? "#B2BAC2" : "#6F7E86",
 }));
 
+
+
 function Profile() {
   const history = useHistory();
+
+  function handleLogout() {
+    localStorage.removeItem("role");
+    localStorage.removeItem("id");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    history.push('./login');
+  }
 
   return (
     <Stack
@@ -35,6 +45,7 @@ function Profile() {
         p: "40px",
         height: "calc(100vh - 64px)",
         maxHeight: "calc(100vh - 64px)",
+        overflowY: "scroll"
       }}
       justifyContent="center"
       alignItems={"center"}
@@ -191,6 +202,7 @@ function Profile() {
               enterNextDelay={500}
             >
               <CustomIconButton
+                onClick={() => handleLogout()}
                 size="large"
                 sx={{
                   boxShadow: 2,
