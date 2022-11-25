@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -29,13 +31,40 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const [textFieldError, setTextFieldError] = useState(false);
+  const history = useHistory();
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+    const login = {
+      username: data.get('username'),
       password: data.get('password'),
-    });
+    };
+    const raw = JSON.stringify(login);
+
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+			url: "http://localhost:3000/login",
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    const response = await fetch("http://localhost:3000/login" , requestOptions);
+    console.log(response.status);
+    if(response.status === 200) {
+      let result = await response.json();
+      setTextFieldError(true);
+      localStorage.setItem('role', result.login_details.role);
+      history.push("/");
+    } else {
+      setTextFieldError(true);
+    }
   };
 
   return (
@@ -61,16 +90,18 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              error={textFieldError}
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
+              error={textFieldError}
               name="password"
               label="Password"
               type="password"
