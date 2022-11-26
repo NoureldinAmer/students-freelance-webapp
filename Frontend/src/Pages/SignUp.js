@@ -47,17 +47,27 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const formInput = {
+    const formInput = role === "freelance" ? {
       firstName: data.get("firstName"),
       firstName: data.get("lastName"),
       email: data.get("email"),
+      username: data.get("username"),
+      password: data.get("password"),
+      role: data.get("role"),
+      phoneNumber: data.get("phoneNumber"),
+      location: data.get("location"),
+    } :{
+      firstName: data.get("firstName"),
+      firstName: data.get("lastName"),
+      email: data.get("email"),
+      username: data.get("username"),
       password: data.get("password"),
       role: data.get("role"),
       businessName: data.get("businessName"),
       businessIndustry: data.get("businessIndustry"),
     };
     console.log(formInput);
-    localStorage.setItem('role', formInput.role);
+    localStorage.setItem("role", formInput.role);
     history.push("/");
   };
 
@@ -137,6 +147,16 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"
@@ -157,8 +177,8 @@ export default function SignUp() {
                     onChange={handleChange}
                     name="role"
                   >
-                    <MenuItem value={"freelance"}>Freelancer</MenuItem>
-                    <MenuItem value={"business"}>
+                    <MenuItem id="freelance" value={"freelance"}>Freelancer</MenuItem>
+                    <MenuItem id="business"value={"business"}>
                       Business owner/hiring manager
                     </MenuItem>
                   </Select>
@@ -196,6 +216,37 @@ export default function SignUp() {
                   id="businessIndustry"
                   label="Business Industry"
                   name="businessIndustry"
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: role === "freelance" ? "inline" : "none" }}
+              >
+                <TextField
+                  name="phoneNumber"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number"
+                  autoFocus
+                />
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                sx={{ display: role === "freelance" ? "inline" : "none" }}
+              >
+                <TextField
+                  required
+                  fullWidth
+                  id="location"
+                  label="Location"
+                  name="location"
+                  autoComplete="location"
                 />
               </Grid>
             </Grid>
