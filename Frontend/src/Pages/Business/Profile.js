@@ -33,9 +33,7 @@ function Profile() {
 
   const handleLogout = () => {
     localStorage.removeItem("role");
-    localStorage.removeItem("id");
-    localStorage.removeItem("username");
-    localStorage.removeItem("password");
+    localStorage.removeItem("userID");
     history.push('./login');
   }
 

@@ -49,7 +49,7 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const formInput = role === "freelance" ? {
       firstName: data.get("firstName"),
-      firstName: data.get("lastName"),
+      lastName: data.get("lastName"),
       email: data.get("email"),
       username: data.get("username"),
       password: data.get("password"),
@@ -58,7 +58,7 @@ export default function SignUp() {
       location: data.get("location"),
     } :{
       firstName: data.get("firstName"),
-      firstName: data.get("lastName"),
+      lastName: data.get("lastName"),
       email: data.get("email"),
       username: data.get("username"),
       password: data.get("password"),

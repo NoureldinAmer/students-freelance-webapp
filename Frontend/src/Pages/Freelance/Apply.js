@@ -22,7 +22,6 @@ import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
-  //borderColor: theme.palette.mode === "dark" ? "green" : "red",
   "& .MuiInputBase-root": {
     "&.Mui-focused fieldset": {
       border:
@@ -30,7 +29,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
     },
   },
   "& .MuiFormLabel-root": {
-    color: theme.palette.mode === "dark" ? "white" : null,
+    color: theme.palette.mode === "dark" ? "#BABAC2" : null,
   },
 }));
 
@@ -42,9 +41,7 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.mode === "dark" ? "white" : null,
     },
-    "& .MuiFormLabel-root": {
-      color: theme.palette.mode === "dark" ? "red" : null,
-    },
+    
   },
 }));
 

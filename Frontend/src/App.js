@@ -31,7 +31,7 @@ function App() {
           <Route path="/signup" component={SignUp} />
           <Paper sx={{ boxShadow: "none", border: "none", borderRadius: 0 }}>
             <NavBar>
-              {/* <BasicModal /> */}
+              <BasicModal />
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/job-posts" component={JobPosts} />

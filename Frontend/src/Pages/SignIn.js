@@ -61,6 +61,7 @@ export default function SignIn() {
       let result = await response.json();
       setTextFieldError(true);
       localStorage.setItem('role', result.login_details.role);
+      localStorage.setItem('userID', result.login_details.ID);
       history.push("/");
     } else {
       setTextFieldError(true);
