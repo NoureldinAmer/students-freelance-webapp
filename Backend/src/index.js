@@ -7,7 +7,7 @@ const cookies = require("cors");
 const { PORT, AccessControlAllowOrigin } = require("./config/");
 const { usersRouter, loginRouter } = require("./routes");
 const { errorMiddleware } = require("./middlewares");
-const {createDatabase} = require('./utils/CreateDataBase')
+const {createTables} = require('./utils/CreateDataBase')
 
 const app = express();
 app.use(express.json());
@@ -34,5 +34,5 @@ app.use("*", (req, res) => res.status(404).send({ msg: "Undefined" }));
 app.use(errorMiddleware);
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
-  createDatabase();
+  createTables();
 });

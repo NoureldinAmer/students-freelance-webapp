@@ -1,7 +1,7 @@
 const sqlite3 = require("sqlite3").verbose();
 let sql; // for sql statements
 
-async function createDatabase() {
+async function createTables() {
   const db = await new sqlite3.Database(
     "./freelance.db",
     sqlite3.OPEN_READWRITE,
@@ -94,7 +94,6 @@ const sqlStatements = [
       (
         ID VARCHAR(50) NOT NULL,
         skillName VARCHAR(100) NOT NULL,
-        proficiency VARCHAR(100) NOT NULL,
         PRIMARY KEY (ID)
       );
     `,
@@ -119,6 +118,7 @@ const sqlStatements = [
       (
         SID VARCHAR(50) NOT NULL,
         FID VARCHAR(50) NOT NULL,
+        proficiency VARCHAR(100),
         PRIMARY KEY (SID, FID),
         FOREIGN KEY (SID) REFERENCES skills(ID),
         FOREIGN KEY (FID) REFERENCES freelancer(ID)
@@ -137,6 +137,7 @@ const sqlStatements = [
         JobName VARCHAR NOT NULL,
         ID VARCHAR(1000) NOT NULL,
         DatePosted DATE NOT NULL,
+        Industry VARCHAR(500),
         JobPostOwner VARCHAR(50) NOT NULL,
         PRIMARY KEY (ID),
         FOREIGN KEY (JobPostOwner) REFERENCES business(ID)
@@ -148,7 +149,7 @@ const sqlStatements = [
     sql: `
       CREATE TABLE IF NOT EXISTS hiring_manager
       (
-        ID VARCHAR(1000) NOT NULL,
+        ID VARCHAR(50) NOT NULL,
         UserName VARCHAR(1000) NOT NULL,
         Password VARCHAR NOT NULL,
         First_Name VARCHAR NOT NULL,
@@ -165,12 +166,11 @@ const sqlStatements = [
     sql: `
       CREATE TABLE IF NOT EXISTS application
       (
-        ApplicantUsername INT NOT NULL,
-        YearsOfExperience INT NOT NULL,
-        CV NODATATYPE NOT NULL,
+        YearsOfExperience VARCHAR(1000),
+        ApplicantURL VARCHAR(10000),
         FID VARCHAR(50) NOT NULL,
         JID VARCHAR(1000) NOT NULL,
-        PRIMARY KEY (ApplicantUsername, FID, JID),
+        PRIMARY KEY (FID, JID),
         FOREIGN KEY (FID) REFERENCES freelancer(ID),
         FOREIGN KEY (JID) REFERENCES job_post(ID)
       );
@@ -183,7 +183,7 @@ const sqlStatements = [
       (
         ClientStatus VARCHAR(100) NOT NULL,
         FreelancerStatus VARCHAR(100) NOT NULL,
-        Salary INT NOT NULL,
+        Salary VARCHAR(15) NOT NULL,
         FID VARCHAR(50) NOT NULL,
         HID VARCHAR(1000) NOT NULL,
         PRIMARY KEY (FID, HID),
@@ -245,4 +245,4 @@ const sqlStatements = [
   },
 ];
 
-module.exports = { createDatabase };
+module.exports = { createTables };
