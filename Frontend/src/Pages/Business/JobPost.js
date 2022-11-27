@@ -11,10 +11,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Container, width } from "@mui/system";
 import styled from "@emotion/styled";
+import { JobPostsHeaders } from "./JobPostsHeaders";
+import JobPostsDummy from "./JobPostsMock.json";
 
 const Job = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
@@ -26,6 +28,14 @@ const Job = styled(Paper)(({ theme }) => ({
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
+
+const HeaderTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#0d294a" : "white",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -45,6 +55,8 @@ const rows = [
 ];
 
 function JobPosts() {
+  const [data, setData] = useState(JobPostsDummy);
+
   return (
     <Box
       sx={{
@@ -57,19 +69,57 @@ function JobPosts() {
       alignItems={"center"}
       spacing={0}
     >
-      <TableContainer component={Paper} sx={{boxShadow: 6}}>
+      <TableContainer component={Paper} sx={{ boxShadow: 6 }}>
         <MyTable sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              {JobPostsHeaders.map((column) => (
+                <HeaderTableCell
+                  sx={{ fontWeight: "bold" }}
+                  key={column.accessor}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.HEADER}
+                </HeaderTableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((row) => {
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.code}
+                  sx={{
+                    "&:hover": {
+                      boxShadow: 1,
+                    },
+                  }}
+                >
+                  {JobPostsHeaders.map((column) => {
+                    const value = row[column.accessor];
+                    return (
+                      <TableCell
+                        key={column.accessor}
+                        align={
+                          column.accessor === "Description" 
+                            ? "left"
+                            : "center" 
+                        }
+                        sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
+                      >
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+            {/* {rows.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -82,7 +132,7 @@ function JobPosts() {
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
               </TableRow>
-            ))}
+            ))} */}
           </TableBody>
         </MyTable>
       </TableContainer>

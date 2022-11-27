@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Stack } from "@mui/system";
@@ -30,6 +30,27 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
 
 function Profile() {
   const history = useHistory();
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userID = localStorage.getItem('userID');
+
+      let requestOptions = {
+        url: `http://localhost:3000/profile/business/${userID}`,
+        method: 'GET',
+        redirect: 'follow'
+      }
+      const response = await fetch(`http://localhost:3000/profile/business/${userID}`, requestOptions);
+      if (response.status === 200) {
+        const responseData = await response.json() 
+        setData(responseData.results)
+        console.log(responseData.results);
+      }
+  }
+
+  fetchData()
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("role");
@@ -52,7 +73,7 @@ function Profile() {
       <CustomBox
         sx={{
           width: 500,
-          height: 500,
+          height: 550,
           boxShadow: 3,
           marginBottom: 10,
           borderRadius: "20px",
@@ -72,7 +93,7 @@ function Profile() {
             />
           </Avatar>
 
-          <CustomTypography variant="h3">First Last</CustomTypography>
+          <CustomTypography variant="h3">{`${data.First_Name} ${data.Last_Name} `}</CustomTypography>
           <Stack
             direction={"row"}
             alignItems={"center"}
@@ -84,7 +105,7 @@ function Profile() {
               ID
             </CustomTypography>
             <CustomTypography>
-              c57e1ff1-a9f6-4b70-ae38-2a8f80c33ec7
+              {data.HID}
             </CustomTypography>
           </Stack>
           <Stack
@@ -97,7 +118,7 @@ function Profile() {
             <CustomTypography variant="h6" fontWeight={"bold"}>
               Username
             </CustomTypography>
-            <CustomTypography>My Username</CustomTypography>
+            <CustomTypography>{data.UserName}</CustomTypography>
           </Stack>
           <Stack
             direction={"row"}
@@ -109,7 +130,19 @@ function Profile() {
             <CustomTypography variant="h6" fontWeight={"bold"}>
               Company
             </CustomTypography>
-            <CustomTypography>Google</CustomTypography>
+            <CustomTypography>{data.Name}</CustomTypography>
+          </Stack>
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            spacing={2}
+            justifyContent={"space-between"}
+            width={"100%"}
+          >
+            <CustomTypography variant="h6" fontWeight={"bold"}>
+              Industy
+            </CustomTypography>
+            <CustomTypography>{data.Industry}</CustomTypography>
           </Stack>
           <Stack
             direction={"row"}

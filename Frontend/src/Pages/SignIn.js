@@ -59,7 +59,7 @@ export default function SignIn() {
     console.log(response.status);
     if(response.status === 200) {
       let result = await response.json();
-      setTextFieldError(true);
+      setTextFieldError(false);
       localStorage.setItem('role', result.login_details.role);
       localStorage.setItem('userID', result.login_details.ID);
       history.push("/");

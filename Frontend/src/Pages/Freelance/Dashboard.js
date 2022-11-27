@@ -14,6 +14,7 @@ function Dashboard() {
         p: "40px",
         height: "calc(100vh - 64px)",
         maxHeight: "calc(100vh - 64px)",
+        overflowX: "scroll",
       }}
     >
       <Paper
