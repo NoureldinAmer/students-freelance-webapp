@@ -1,4 +1,8 @@
 import {
+  Button,
+  Fab,
+  IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -10,9 +14,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
-import { JobPostsHeaders } from "./JobPostsHeaders";
-import JobPostsDummy from "./JobPostsMock.json";
-import { useHistory } from "react-router-dom";
+import { JobApplicantsHeaders } from "./JobApplicantsHeaders";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useLocation } from "react-router-dom";
 
 const Job = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
@@ -38,28 +42,30 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function JobPosts() {
-  const [data, setData] = useState(JobPostsDummy);
-  const history = useHistory();
-
+function JobApplicants() {
+  const location = useLocation();
+  const [data, setData] = useState([]);
+  //console.log(`from Applicants: ${location.state.detail.id}`);
   useEffect(() => {
     const fetchData = async () => {
-      const userID = localStorage.getItem('userID');
-
+      console.log(`from Applicants: ${location.state.detail.id}`);
       let requestOptions = {
-        url: `http://localhost:3000/job-posts/business/${userID}`,
-        method: 'GET',
-        redirect: 'follow'
-      }
-      const response = await fetch(`http://localhost:3000/job-posts/business/${userID}`, requestOptions);
+        url: `http://localhost:3000/job-posts/${location.state.detail.id}`,
+        method: "GET",
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:3000/job-posts/${location.state.detail.id}`,
+        requestOptions
+      );
       if (response.status === 200) {
-        const responseData = await response.json() 
-        setData(responseData.results)
+        const responseData = await response.json();
+        setData(responseData.results);
         console.log(responseData.results);
       }
-  }
+    };
 
-  fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -78,7 +84,7 @@ function JobPosts() {
         <MyTable sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              {JobPostsHeaders.map((column) => (
+              {JobApplicantsHeaders.map((column) => (
                 <HeaderTableCell
                   sx={{ fontWeight: "bold" }}
                   key={column.accessor}
@@ -92,40 +98,37 @@ function JobPosts() {
           <TableBody>
             {data.map((row) => {
               return (
-                <TableRow
-                  hover
-                  role="checkbox"
-                  tabIndex={-1}
-                  key={row.code}
-                  sx={{
-                    transition: "0.3s",
-                    "&:hover": {
-                      boxShadow: 1,
-                    },
-                  }}
-                  onClick={() => history.push({
-                    pathname: `/job-posts/${row.ID}`,
-                    state: { detail: {id: row.ID }
-                  }
-                  })}
-                >
-                  {JobPostsHeaders.map((column) => {
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {JobApplicantsHeaders.map((column) => {
                     const value = row[column.accessor];
-                    return (
-                      <TableCell
-                        key={column.accessor}
-                        align={
-                          column.accessor === "Description" 
-                            ? "left"
-                            : "center" 
-                        }
-                        sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
-                      >
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
+                    if (column.accessor === "url") {
+                      return (
+                        <TableCell key={column.accessor}>
+                          <IconButton
+                            aria-label="delete"
+                            size="small"
+                            href={value}
+                            target="_blank"
+                            sx={{
+                              transition: "0.3s",
+                              "&:hover": {
+                                boxShadow: 10,
+                              },
+                            }}
+                          >
+                            <OpenInNewIcon fontSize="inherit" />
+                          </IconButton>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell key={column.accessor} align="center">
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    }
                   })}
                 </TableRow>
               );
@@ -137,4 +140,4 @@ function JobPosts() {
   );
 }
 
-export default JobPosts;
+export default JobApplicants;

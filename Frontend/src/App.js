@@ -15,6 +15,7 @@ import CompanyProfile from "./Pages/CompanyProfile";
 import ErrorPage from "./Pages/ErrorPage";
 import Apply from "./Pages/Apply";
 import BasicModal from "./Pages/Modal";
+import JobPost from "./Pages/JobPost";
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -35,6 +36,7 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/job-posts" component={JobPosts} />
+                <Route exact path="/job-posts/:jobId" component={JobPost} />
                 <Route exact path="/new-job-post" component={CreateJobPost} />
                 <Route exact path="/offers" component={Offers} />
                 <Route exact path="/apply" component={Apply} />
