@@ -15,6 +15,7 @@ import {
   MenuItem,
   FormHelperText,
   Select,
+  Alert,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
@@ -42,6 +43,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("");
+  const [errorLabel, setErrorLabel] = useState(true);
   const history = useHistory();
 
   const handleSubmit = (event) => {
@@ -87,6 +89,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
+          <Alert severity="error" sx={{ display: errorLabel ? "" : "none"}}>Username or Email already exist use different username and/or passowrd</Alert>
           <Avatar
             sx={{
               m: 1,
@@ -117,8 +120,8 @@ export default function SignUp() {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   onChange={(e) => setFirstName(e.target.value)}
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
 
@@ -131,6 +134,7 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                   onChange={(e) => setLastName(e.target.value)}
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -141,6 +145,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,6 +156,7 @@ export default function SignUp() {
                   label="Username"
                   name="username"
                   autoComplete="username"
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -162,6 +168,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -176,6 +183,7 @@ export default function SignUp() {
                     label="Role"
                     onChange={handleChange}
                     name="role"
+                    onFocus={() => setErrorLabel(false)}
                   >
                     <MenuItem id="freelance" value={"freelance"}>Freelancer</MenuItem>
                     <MenuItem id="business"value={"business"}>
@@ -201,6 +209,7 @@ export default function SignUp() {
                   id="businessName"
                   label="Business Name"
                   autoFocus
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
 
@@ -216,6 +225,7 @@ export default function SignUp() {
                   id="businessIndustry"
                   label="Business Industry"
                   name="businessIndustry"
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
               <Grid
@@ -231,6 +241,7 @@ export default function SignUp() {
                   id="phoneNumber"
                   label="Phone Number"
                   autoFocus
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
 
@@ -247,6 +258,7 @@ export default function SignUp() {
                   label="Location"
                   name="location"
                   autoComplete="location"
+                  onFocus={() => setErrorLabel(false)}
                 />
               </Grid>
             </Grid>
