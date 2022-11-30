@@ -17,7 +17,6 @@ import {
 export default function AddressForm({ formData }) {
   const handleSubmit = (id, value) => {
     formData[id] = value;
-    console.log(formData);
   };
 
   const [role, setRole] = useState("");
@@ -37,7 +36,6 @@ export default function AddressForm({ formData }) {
             id="jobName"
             name="jobName"
             label="Add a title"
-            defaultValue={formData.jobName}
             fullWidth
             autoComplete="given-name"
             onBlur={(e) => handleSubmit(e.target.name, e.target.value)}
@@ -45,25 +43,18 @@ export default function AddressForm({ formData }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl sx={{ minWidth: 120, width: "100%" }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              Duration
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              value={role}
+            <TextField
+              id="outlined-number"
               label="Duration"
-              onChange={handleChange}
-              onBlur={(e) => handleSubmit(e.target.name, e.target.value)}
+              fullWidth
+              type="hours"
               name="duration"
-            >
-              <MenuItem value={"More than 6 months"}>
-                More than 6 months
-              </MenuItem>
-              <MenuItem value={"3 to 6 months"}>3 to 6 months</MenuItem>
-              <MenuItem value={"1 to 3 months"}>1 to 3 months</MenuItem>
-            </Select>
-            <FormHelperText>How long will your work take?</FormHelperText>
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onBlur={(e) => handleSubmit(e.target.name, e.target.value)}
+            />
+            <FormHelperText>{"How long will your work take (in weeks)?"}</FormHelperText>
           </FormControl>
         </Grid>
         <Grid item xs={12}>

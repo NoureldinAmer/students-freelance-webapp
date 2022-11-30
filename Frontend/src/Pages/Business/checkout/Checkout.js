@@ -72,6 +72,29 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const submitJobPost = async () => {
+    const HID = localStorage.getItem("userID");
+    formData.HID = HID;
+
+    console.log(formData);
+    const raw = JSON.stringify(formData);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+			url: "http://localhost:3000/job-posts/create",
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    const response = await fetch("http://localhost:3000/job-posts/create" , requestOptions);
+    console.log(response.status);
+    if(response.status === 200) {
+      handleNext();
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -87,12 +110,10 @@ export default function Checkout() {
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
-                Thank you for your order.
+                Job Post Created
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Job Post is created check your jobs section to view job post
               </Typography>
             </React.Fragment>
           ) : (
@@ -106,10 +127,10 @@ export default function Checkout() {
                 )}
                 {activeStep === steps.length - 1 ? <Button
                   variant="contained"
-                  onClick={() => console.log(formData)}
+                  onClick={() => submitJobPost()}
                   sx={{ mt: 3, ml: 1 }}
                 >
-                   Place order
+                  Confirm
                 </Button> : <Button
                   variant="contained"
                   onClick={handleNext}

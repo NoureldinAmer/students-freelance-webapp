@@ -131,14 +131,12 @@ router.post("/create", async (req, res) => {
           stmt = db.prepare(sql);
           stmt.run(skillID,jobPostID);
         }
-
-        
       } catch (error) {
         console.log(error);
       }
     })
 
-    
+    return res.status(200).json({ msg: "successfully added job post" });
     
 
   } catch (err) {
