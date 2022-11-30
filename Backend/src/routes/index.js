@@ -1,5 +1,6 @@
 module.exports = { 
   ...require("./users"),
   ...require("./login"),
-  ...require("./profile")
+  ...require("./profile"),
+  ...require("./job-posts")
 };
