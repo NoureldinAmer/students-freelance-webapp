@@ -5,7 +5,13 @@ const cors = require("cors");
 const morgan = require("morgan");
 const cookies = require("cors");
 const { PORT, AccessControlAllowOrigin } = require("./config/");
-const { usersRouter, loginRouter, profileRouter, jobPostsRouter } = require("./routes");
+const { 
+  usersRouter, 
+  loginRouter, 
+  profileRouter, 
+  jobPostsRouter,
+  signupRouter,
+} = require("./routes");
 const { errorMiddleware } = require("./middlewares");
 const {createTables} = require('./utils/CreateDataBase')
 
@@ -24,7 +30,8 @@ app.use(morgan("tiny"));
 app.use("/users", usersRouter);
 app.use("/login", loginRouter);
 app.use("/profile", profileRouter);
-app.use("/job-posts", jobPostsRouter)
+app.use("/job-posts", jobPostsRouter);
+app.use("/signup", signupRouter)
 
 
 
