@@ -25,7 +25,7 @@ export default function BasicModal({ signedIn }) {
   const history = useHistory();
 
   useEffect(() => {
-    if (localStorage.getItem("userID") === null) {
+    if (localStorage.getItem("userID") === null || localStorage.getItem("userID") === "undefined") {
       setOpen(true);
     }
   }, []);

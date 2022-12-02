@@ -43,10 +43,10 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [role, setRole] = useState("");
-  const [errorLabel, setErrorLabel] = useState(true);
+  const [errorLabel, setErrorLabel] = useState(false);
   const history = useHistory();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const formInput = role === "freelance" ? {
@@ -68,9 +68,31 @@ export default function SignUp() {
       businessName: data.get("businessName"),
       businessIndustry: data.get("businessIndustry"),
     };
+
     console.log(formInput);
     localStorage.setItem("role", formInput.role);
-    history.push("/");
+    const raw = JSON.stringify(formInput);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+			url: "http://localhost:3000/signup",
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    const response = await fetch("http://localhost:3000/signup" , requestOptions);
+    
+    if(response.status === 200) {
+      const result = await response.json();
+      console.log(result.userID);
+      localStorage.setItem("userID" , result.userID);
+      history.push("/");
+    } else {
+      console.log(response.error);
+      setErrorLabel(true);
+    }
   };
 
   const handleChange = (event) => {
