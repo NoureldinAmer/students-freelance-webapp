@@ -40,6 +40,7 @@ router.post("/", async (req, res) => {
         .status(400)
         .json({ error: "username and/or password already exist" });
     }
+    let ID;
 
     if (role === "freelance") {
       const freelanceInfo = {
@@ -51,7 +52,7 @@ router.post("/", async (req, res) => {
         phoneNumber: phoneNumber,
         location: location
       }
-      freelancerSignUp(freelanceInfo);
+      ID = freelancerSignUp(freelanceInfo);
     } else {
       const businessInfo = {
         firstName: firstName,
@@ -61,9 +62,9 @@ router.post("/", async (req, res) => {
         businessName: businessName,
         businessIndustry: businessIndustry
       }
-      businessSignUp(businessInfo);
+      ID = businessSignUp(businessInfo);
     }
-    return res.status(200).json({ msg: "successfully added user to DB" });
+    return res.status(200).json({ msg: "successfully added user to DB", userID: ID });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Server Error" });
@@ -99,7 +100,7 @@ function freelancerSignUp(freelanceInfo) {
       firstName,
       lastName
     );
-    return;
+    return freelancerID;
   } catch (error) {
     console.log(error);
     throw new Error(error);
@@ -107,30 +108,36 @@ function freelancerSignUp(freelanceInfo) {
 }
 
 function businessSignUp(businessInfo) {
-  const {
-    firstName,
-    lastName,
-    username,
-    password,
-    businessName,
-    businessIndustry,
-  } = businessInfo;
-  const businessID = uuid();
-  
-  let sql = `
-  INSERT INTO business
-	VALUES (?,?,?)
-  `
-  let stmt = db.prepare(sql);
-  stmt.run(businessID, businessName, businessIndustry);
-
-  const hiringManagerID = uuid();
-  sql = `
-  INSERT INTO hiring_manager 
-  VALUES (?,?,?,?,?,?)
-  `
-  stmt = db.prepare(sql);
-  stmt.run(hiringManagerID, username, password, firstName, lastName, businessID);
+  try {
+	const {
+	    firstName,
+	    lastName,
+	    username,
+	    password,
+	    businessName,
+	    businessIndustry,
+	  } = businessInfo;
+	  const businessID = uuid();
+	  
+	  let sql = `
+	  INSERT INTO business
+		VALUES (?,?,?)
+	  `
+	  let stmt = db.prepare(sql);
+	  stmt.run(businessID, businessName, businessIndustry);
+	
+	  const hiringManagerID = uuid();
+	  sql = `
+	  INSERT INTO hiring_manager 
+	  VALUES (?,?,?,?,?,?)
+	  `
+	  stmt = db.prepare(sql);
+	  stmt.run(hiringManagerID, username, password, firstName, lastName, businessID);
+	  return hiringManagerID;
+} catch (error) {
+	console.log(error);
+  throw error;
+}
 }
 
 module.exports = { signupRouter: router };
