@@ -3,5 +3,6 @@ module.exports = {
   ...require("./login"),
   ...require("./signup"),
   ...require("./profile"),
-  ...require("./job-posts")
+  ...require("./job-posts"),
+  ...require("./offers")
 };

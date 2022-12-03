@@ -4,34 +4,36 @@ const Database = require("better-sqlite3");
 const db = new Database("freelance.db", { verbose: console.log });
 
 /**
- * Handle get request, queries the database to get the profile details of the 
+ * Handle get request, queries the database to get the profile details of the
  * provided user
  * @param role - from req.params
  * @param id - from req.params
- * @returns {object} - returns user details if user exists, 
+ * @returns {object} - returns user details if user exists,
  * else returns a 400 response status
  */
 router.get("/:role/:id", async (req, res) => {
   try {
-	  const { role } = req.params;
-	  const { id } = req.params;
-	  let queryResult;
-	
-	  if (role === "freelancer") {
-	    queryResult = queryFreelancer(id);
-	  } else if ((role === "business")){
-	    queryResult = queryHiringManager(id);
-	  } else {
+    const { role } = req.params;
+    const { id } = req.params;
+    let queryResult;
+
+    if (role === "freelancer") {
+      queryResult = queryFreelancer(id);
+    } else if (role === "business") {
+      queryResult = queryHiringManager(id);
+    } else {
       return res.status(404).json({ error: "incorrect role was provided" });
     }
-	  if (queryResult.length === 0) {
-	    return res.status(400).json({ error: "User ID provided is not available" });
-	  }
-	  return res.status(200).json({results: queryResult[0]});
-} catch (error) {
-  console.log(error);
-	return res.status(500).json({ error: "Server Error" });
-}
+    if (queryResult.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "User ID provided is not available" });
+    }
+    return res.status(200).json({ results: queryResult[0] });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server Error" });
+  }
 });
 
 /**
@@ -41,7 +43,7 @@ router.get("/:role/:id", async (req, res) => {
  */
 function queryFreelancer(id) {
   let sql = null; // for sql statements
-  
+
   //sql query
   sql = `
     SELECT *
@@ -55,14 +57,14 @@ function queryFreelancer(id) {
 }
 
 /**
- * perform sql query to get the profile details of the hiring manager and 
+ * perform sql query to get the profile details of the hiring manager and
  * the company details, the hiring manager works for
  * @param {string} id - id of hiring manager
  * @returns {object} - return result of sql query
  */
 function queryHiringManager(id) {
   let sql; // for sql statements
-  
+
   //sql query
   sql = `
     SELECT 

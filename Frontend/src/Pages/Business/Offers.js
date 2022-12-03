@@ -1,21 +1,18 @@
-import React from 'react'
 import {
-  Grid,
   Paper,
-  Stack,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box, Container, width } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import { Box } from "@mui/system";
 import styled from "@emotion/styled";
-import BasicModal from '../Modal';
+import { OffersHeaders } from "./OffersHeaders";
+import JobPostsDummy from "./JobPostsMock.json";
+import { useHistory } from "react-router-dom";
 
 const Job = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
@@ -33,19 +30,38 @@ const MyTable = styled(Table)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const HeaderTableCell = styled(TableCell)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#0d294a" : "white",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+function JobPosts() {
+  const [data, setData] = useState(JobPostsDummy);
+  const history = useHistory();
 
-function Offers() {
+  useEffect(() => {
+    const fetchData = async () => {
+      const userID = localStorage.getItem('userID');
+
+      let requestOptions = {
+        url: `http://localhost:3000/offers/business/${userID}`,
+        method: 'GET',
+        redirect: 'follow'
+      }
+      const response = await fetch(`http://localhost:3000/offers/business/${userID}`, requestOptions);
+      if (response.status === 200) {
+        const responseData = await response.json() 
+        setData(responseData.results)
+        console.log(responseData.results);
+      }
+  }
+
+  fetchData()
+  }, []);
+
   return (
     <Box
       sx={{
@@ -58,37 +74,62 @@ function Offers() {
       alignItems={"center"}
       spacing={0}
     >
-      <TableContainer component={Paper} sx={{boxShadow: 6}}>
+      <TableContainer component={Paper} sx={{ boxShadow: 6 }}>
         <MyTable sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              {OffersHeaders.map((column) => (
+                <HeaderTableCell
+                  sx={{ fontWeight: "bold" }}
+                  key={column.accessor}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.HEADER}
+                </HeaderTableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
+            {data.map((row) => {
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.code}
+                  sx={{
+                    transition: "0.3s",
+                    "&:hover": {
+                      boxShadow: 1,
+                    },
+                  }}
+                >
+                  {OffersHeaders.map((column) => {
+                    const value = row[column.accessor];
+                    return (
+                      <TableCell
+                        key={column.accessor}
+                        align={
+                          column.accessor === "email" 
+                            ? "left"
+                            : "center" 
+                        }
+                        sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
+                      >
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </MyTable>
       </TableContainer>
     </Box>
-  )
+  );
 }
 
-export default Offers
+export default JobPosts;
