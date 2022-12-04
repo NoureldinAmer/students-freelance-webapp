@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const Database = require("better-sqlite3");
-const {uuid} = require('../../utils/GenerateID');
-const {getCurrentDate} = require('../../utils/Date');
+const { uuid } = require("../../utils/GenerateID");
+const { getCurrentDate } = require("../../utils/Date");
 const db = new Database("freelance.db", { verbose: console.log });
 
 /**
@@ -20,7 +20,7 @@ router.get("/:role/:id", async (req, res) => {
     let queryResult;
 
     if (role === "freelancer") {
-      //queryResult = queryFreelancer(id);
+      queryResult = queryFreelancer(id);
     } else if (role === "business") {
       queryResult = queryHiringManager(id);
     } else {
@@ -65,8 +65,15 @@ router.post("/create", async (req, res) => {
   try {
     const { HID } = req.body; //hiring manager id
     let BID; //bussiness id
-    const { jobName, duration, locations, salary, skills, description , workingHours} =
-      req.body;
+    const {
+      jobName,
+      duration,
+      locations,
+      salary,
+      skills,
+      description,
+      workingHours,
+    } = req.body;
     let industry;
     const jobPostID = uuid();
     const date = getCurrentDate();
@@ -89,13 +96,23 @@ router.post("/create", async (req, res) => {
       return res.status(400).json({ error: "hiring manager not found" });
     }
 
-    //query to insert job post into the job_posts table 
+    //query to insert job post into the job_posts table
     sql = `
       INSERT INTO job_post
       VALUES (?,?,?,?,?,?,?,?,?)
     `;
     stmt = db.prepare(sql);
-    stmt.run(duration, workingHours, salary, description, jobName, jobPostID, date, industry, BID);
+    stmt.run(
+      duration,
+      workingHours,
+      salary,
+      description,
+      jobName,
+      jobPostID,
+      date,
+      industry,
+      BID
+    );
 
     skills.map((skill) => {
       skill = skill.charAt(0).toUpperCase() + skill.slice(1);
@@ -104,7 +121,7 @@ router.post("/create", async (req, res) => {
         SELECT *
         FROM skills
         WHERE skillName=?
-        `
+        `;
         stmt = db.prepare(sql);
         const result = stmt.all(skill);
         if (result.length === 0) {
@@ -112,33 +129,31 @@ router.post("/create", async (req, res) => {
           sql = `
             INSERT INTO skills
             VALUES (?,?)
-          `
+          `;
           stmt = db.prepare(sql);
-          const result = stmt.run(skillID,skill);
+          const result = stmt.run(skillID, skill);
           console.log(result);
           sql = `
           INSERT INTO requires
           VALUES (?,?)
-          `
+          `;
           stmt = db.prepare(sql);
-          stmt.run(skillID,jobPostID);
+          stmt.run(skillID, jobPostID);
         } else {
           const skillID = result[0].ID;
           sql = `
           INSERT INTO requires
           VALUES (?,?)
-          `
+          `;
           stmt = db.prepare(sql);
-          stmt.run(skillID,jobPostID);
+          stmt.run(skillID, jobPostID);
         }
       } catch (error) {
         console.log(error);
       }
-    })
+    });
 
     return res.status(200).json({ msg: "successfully added job post" });
-    
-
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Server Error" });
@@ -150,20 +165,20 @@ router.post("/create", async (req, res) => {
  * @param {string} id - id of freelancer
  * @returns {object} -returns result of sql query
  */
-//  function queryFreelancer(id) {
-//   let sql = null; // for sql statements
+function queryFreelancer(id) {
+  //sql query
+  let sql = `
+    SELECT distinct j.ID, j.JobName, j.salary, j.Description, j.WorkingHours, 
+    j.DatePosted, b.Name AS BusinessName, j.Industry
+    FROM has_skill AS h, freelancer AS f, requires AS r, Skills AS s, job_post AS j, business AS b
+    WHERE h.FID=f.ID AND r.JID = j.ID AND h.SID = r.SID AND j.JobPostOwner = b.ID
+    AND f.ID=?
+  `;
 
-//   //sql query
-//   sql = `
-//     SELECT *
-//     FROM freelancer
-//     WHERE ID=?
-//   `;
-
-//   let stmt = db.prepare(sql);
-//   const result = stmt.all(id);
-//   return result;
-// }
+  let stmt = db.prepare(sql);
+  const result = stmt.all(id);
+  return result;
+}
 
 /**
  * perform sql query to get the profile details of the hiring manager and

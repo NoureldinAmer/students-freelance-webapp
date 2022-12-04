@@ -37,6 +37,34 @@ router.get("/:role/:id", async (req, res) => {
 });
 
 /**
+ * Handle get request, queries the database to get the profile details of the
+ * provided user
+ * @param role - from req.params
+ * @param id - from req.params
+ * @returns {object} - returns user details if user exists,
+ * else returns a 400 response status
+ */
+router.get("/:HID", async (req, res) => {
+  try {
+    const { HID } = req.params;
+    let sql = `
+    SELECT p.ID, p.completionStatus, p.payStatus, p.startDate,
+    p.deadline, h.ID AS manager, p.projectOwner
+    FROM project AS p, hiring_manager AS h
+    WHERE h.ID =?
+    AND h.worksFor = p.projectOwner
+    `
+    const stmt = db.prepare(sql);
+    const result = stmt.all(HID);
+    
+    return res.status(200).json({ results: result });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server Error" });
+  }
+});
+
+/**
  * perform sql query to get the profile details of the freelancer
  * @param {string} id - id of freelancer
  * @returns {object} -returns result of sql query

@@ -4,5 +4,6 @@ module.exports = {
   ...require("./signup"),
   ...require("./profile"),
   ...require("./job-posts"),
-  ...require("./offers")
+  ...require("./offers"),
+  ...require("./apply")
 };
