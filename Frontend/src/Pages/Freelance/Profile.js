@@ -242,7 +242,6 @@ function Profile() {
                     bgcolor: "inherit",
                   },
                 }}
-                //onClick={() => history.push("/job-posts")}
               >
                 <LogoutIcon fontSize="inherit" />
               </CustomIconButton>

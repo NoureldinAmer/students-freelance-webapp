@@ -4,6 +4,14 @@ export const JobPostsHeaders = [
     accessor: "JobName"
   },
   {
+    HEADER: 'Date Posted',
+    accessor: "DatePosted"
+  },
+  {
+    HEADER: 'Working Hours (per week)',
+    accessor: 'WorkingHours'
+  },
+  {
     HEADER: 'Salary',
     accessor: "Salary"
   },
@@ -12,22 +20,10 @@ export const JobPostsHeaders = [
     accessor: "Description"
   },
   {
-    HEADER: 'Working Hours (per week)',
-    accessor: 'WorkingHours'
-  },
-  {
-    HEADER: 'Date Posted',
-    accessor: "DatePosted"
-  },
-  {
-    HEADER: 'Business',
-    accessor: 'BusinessName'
-  },
-  {
     HEADER: 'Industry',
     accessor: "Industry"
   },
   {
-    accessor: "Apply"
+    accessor: "apply"
   }
 ]

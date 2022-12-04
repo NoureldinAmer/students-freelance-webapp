@@ -36,10 +36,11 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  fontWeight: "bold"
 }));
 
 function JobPosts() {
-  const [data, setData] = useState(JobPostsDummy);
+  const [data, setData] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -80,7 +81,6 @@ function JobPosts() {
             <TableRow>
               {OffersHeaders.map((column) => (
                 <HeaderTableCell
-                  sx={{ fontWeight: "bold" }}
                   key={column.accessor}
                   style={{ minWidth: column.minWidth }}
                 >
@@ -109,11 +109,7 @@ function JobPosts() {
                     return (
                       <TableCell
                         key={column.accessor}
-                        align={
-                          column.accessor === "email" 
-                            ? "left"
-                            : "center" 
-                        }
+                        align="center" 
                         sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
                       >
                         {column.format && typeof value === "number"

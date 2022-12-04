@@ -1,6 +1,6 @@
 import { Paper } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,7 +18,7 @@ import {
   FormHelperText,
   Select,
 } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
@@ -46,6 +46,76 @@ const CustomSelect = styled(Select)(({ theme }) => ({
 }));
 
 function Apply() {
+  const location = useLocation();
+  const history = useHistory();
+  const [YOF, setYOF] = useState("");
+
+  const handleChange = (event) => {
+    setYOF(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const formInput = {
+      JID: location.state.detail.id,
+      FID: localStorage.getItem("userID"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      phoneNumber: data.get("phoneNumber"),
+      YOF: data.get("YOF"),
+      resumeUrl : data.get("resumeUrl"),
+      additionalInfo : data.get("additionalInfo")
+    } 
+    console.log(formInput);
+    const raw = JSON.stringify(formInput);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+			url: "http://localhost:3000/apply",
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    const response = await fetch("http://localhost:3000/apply" , requestOptions);
+    
+    if(response.status === 200) {
+      const result = await response.json();
+      console.log(result);
+      history.push("/");
+    } else {
+      console.log(response.error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(`JID: ${location.state.detail.id}`);
+      console.log(`FID: ${location.state.detail.id}`);
+      // let requestOptions = {
+      //   url: `http://localhost:3000/job-posts/${location.state.detail.id}`,
+      //   method: "GET",
+      //   redirect: "follow",
+      // };
+      // const response = await fetch(
+      //   `http://localhost:3000/job-posts/${location.state.detail.id}`,
+      //   requestOptions
+      // );
+      // if (response.status === 200) {
+      //   const responseData = await response.json();
+      //   setData(responseData.results);
+      //   console.log(responseData.results);
+      // }
+    };
+
+    fetchData();
+  }, []);
+
+
+
   return (
     <Box
       sx={{
@@ -63,7 +133,7 @@ function Apply() {
         <Box
           component="form"
           noValidate="false"
-          //onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           sx={{ mt: 3 }}
           //
 
@@ -73,14 +143,12 @@ function Apply() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <CustomTextField
-                autoComplete="given-name"
                 name="firstName"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
-                autoFocus
-                //onChange={(e) => setFirstName(e.target.value)}
+                inputProps={{autoComplete:'off'}}
               />
             </Grid>
 
@@ -91,8 +159,8 @@ function Apply() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                autoComplete="family-name"
-                //onChange={(e) => setLastName(e.target.value)}
+                inputProps={{autoComplete:'off'}}
+
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,17 +170,18 @@ function Apply() {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                inputProps={{autoComplete:'off'}}
               />
             </Grid>
             <Grid item xs={12}>
               <CustomTextField
                 required
                 fullWidth
-                name="phone"
+                name="phoneNumber"
                 label="Phone"
-                type="number"
-                id="phome"
+                type="phone"
+                id="phoneNumber"
+                inputProps={{autoComplete:'off'}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -130,9 +199,9 @@ function Apply() {
                 <CustomSelect
                   labelId="demo-simple-select-helper-label"
                   id="demo-simple-select-helper"
-                  //value={role}
+                  value={YOF}
                   label="years of experience"
-                  //onChange={handleChange}
+                  onChange={handleChange}
                   name="YOF"
                 >
                   <MenuItem value={"less than 3 months"}>
@@ -151,52 +220,13 @@ function Apply() {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="h5" mb={1}>
-                Links
-              </Typography>
               <CustomTextField
                 required
                 fullWidth
-                id="linkdin"
-                label="Linkdin URL"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CustomTextField
-                fullWidth
-                id="twitter"
-                label="Twitter URL"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CustomTextField
-                fullWidth
-                id="github"
-                label="GitHub URL"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CustomTextField
-                fullWidth
-                id="portfolio"
-                label="Portfolio URL"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <CustomTextField
-                fullWidth
-                id="other"
-                label="Other Website"
-                name="email"
-                autoComplete="email"
+                id="resumeUrl"
+                label="Resume URL"
+                name="resumeUrl"
+                inputProps={{autoComplete:'off'}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -204,8 +234,8 @@ function Apply() {
                 Additional Information
               </Typography>
               <CustomTextField
-                id="description"
-                name="description"
+                id="additionalInfo"
+                name="additionalInfo"
                 label="Add a cover letter"
                 fullWidth
                 multiline
