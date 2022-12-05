@@ -6,6 +6,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SearchIcon from '@mui/icons-material/Search';
 import DescriptionIcon from '@mui/icons-material/Description';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 
 const BusinessRoutes = [
@@ -53,9 +54,9 @@ const FreelanceRoutes = [
     icon: <DescriptionIcon />
   },
   {
-    title: "Apply",
-    link: "/apply",
-    icon: <CreateIcon />
+    title: "My Projects",
+    link: "/projects",
+    icon: <AccountTreeIcon />
   },
   {
     title: "Explore Jobs",

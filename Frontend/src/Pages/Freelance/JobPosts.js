@@ -143,6 +143,26 @@ function JobPosts() {
                           </Tooltip>
                         </TableCell>
                       );
+                    } else if (column.accessor === "Salary"){
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align={
+                            column.accessor === "Description"
+                              ? "left"
+                              : "center"
+                          }
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          {column.format && typeof value === "number"
+                            ? `$${column.format(value)}`
+                            : `$${value}`}
+                        </TableCell>
+                      );
                     } else {
                       return (
                         <TableCell

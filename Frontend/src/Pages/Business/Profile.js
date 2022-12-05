@@ -140,7 +140,7 @@ function Profile() {
             width={"100%"}
           >
             <CustomTypography variant="h6" fontWeight={"bold"}>
-              Industy
+              Industry
             </CustomTypography>
             <CustomTypography>{data.Industry}</CustomTypography>
           </Stack>

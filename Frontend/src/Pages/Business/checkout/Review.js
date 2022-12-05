@@ -69,7 +69,7 @@ export default function Review({ formData }) {
           <Grid item xs={12} sm={6}>
             <TextField
               id="outlined-number"
-              label="Woking Hours"
+              label="Working Hours"
               fullWidth
               type="hours"
               name="workingHours"
