@@ -12,7 +12,8 @@ const {
   jobPostsRouter,
   signupRouter,
   offersRouter,
-  applyRouter
+  applyRouter,
+  projectsRouter
 } = require("./routes");
 const { errorMiddleware } = require("./middlewares");
 const {createTables} = require('./utils/CreateDataBase')
@@ -35,7 +36,8 @@ app.use("/profile", profileRouter);
 app.use("/job-posts", jobPostsRouter);
 app.use("/signup", signupRouter);
 app.use("/offers", offersRouter);
-app.use("/apply", applyRouter)
+app.use("/apply", applyRouter);
+app.use("/projects", projectsRouter)
 
 
 
