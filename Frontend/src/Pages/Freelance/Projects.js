@@ -1,6 +1,4 @@
 import {
-  Button,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -8,22 +6,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 import { ProjectsHeaders } from "./ProjectsHeaders";
-import { useHistory } from "react-router-dom";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-
-const Job = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",

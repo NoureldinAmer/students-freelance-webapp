@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { Paper, Stack, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useEffect } from "react";
 
 function Dashboard() {
   const history = useHistory();
@@ -34,7 +33,7 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-        onClick={() => history.push("/offers")}
+        onClick={() => history.push("/applications")}
       >
         <Stack height="100%" justifyContent={"space-between"} p={3}>
           <Typography></Typography>
@@ -46,7 +45,7 @@ function Dashboard() {
             color="white"
           >
             <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
-              Apply
+              View My Applications
             </Typography>
             <ArrowForwardIcon fontSize="large" />
           </Stack>
@@ -68,7 +67,7 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-        onClick={() => history.push("/new-job-post")}
+        onClick={() => history.push("/job-posts")}
       >
         <Stack height="100%" justifyContent={"space-between"} p={3}>
           <Typography></Typography>
@@ -102,7 +101,7 @@ function Dashboard() {
             boxShadow: 20,
           },
         }}
-        onClick={() => history.push("/job-posts")}
+        onClick={() => history.push("/offers")}
       >
         <Stack height="100%" justifyContent={"space-between"} p={3}>
           <Typography></Typography>

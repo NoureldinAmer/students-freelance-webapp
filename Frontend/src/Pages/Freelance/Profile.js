@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import { Stack } from "@mui/system";
 import { Avatar, IconButton, Tooltip, Typography } from "@mui/material";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import DescriptionIcon from '@mui/icons-material/Description';
 import CreateIcon from "@mui/icons-material/Create";
 import LogoutIcon from '@mui/icons-material/Logout';
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import SearchIcon from '@mui/icons-material/Search';
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";

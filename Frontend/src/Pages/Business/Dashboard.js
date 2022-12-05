@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { Paper, Stack, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useEffect } from "react";
 
 function Dashboard() {
   const history = useHistory();
@@ -114,7 +113,7 @@ function Dashboard() {
             color="white"
           >
             <Typography fontSize="22px" fontWeight="525" maxWidth={"70%"}>
-              View Job Postings
+              View my Job Posts
             </Typography>
             <ArrowForwardIcon fontSize="large" />
           </Stack>

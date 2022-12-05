@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import SignUp from "./Pages/SignUp";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Paper } from "@mui/material";
@@ -20,12 +20,6 @@ import Projects from "./Pages/Projects";
 import Applications from "./Pages/Applications";
 
 function App() {
-  const [role, setRole] = useState(localStorage.getItem("role"));
-
-  useEffect(() => {
-    setRole(localStorage.getItem("role"));
-  }, [])
-
   return (
     <Router>
       <Paper sx={{ boxShadow: "none", border: "none", borderRadius: 0 }}>

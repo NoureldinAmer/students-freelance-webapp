@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -6,6 +7,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -13,14 +15,7 @@ import styled from "@emotion/styled";
 import { JobPostsHeaders } from "./JobPostsHeaders";
 import JobPostsDummy from "./JobPostsMock.json";
 import { useHistory } from "react-router-dom";
-
-const Job = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
@@ -36,7 +31,7 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
-  fontWeight: "bold"
+  fontWeight: "bold",
 }));
 
 function JobPosts() {
@@ -45,22 +40,25 @@ function JobPosts() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userID = localStorage.getItem('userID');
+      const userID = localStorage.getItem("userID");
 
       let requestOptions = {
         url: `http://localhost:3000/job-posts/business/${userID}`,
-        method: 'GET',
-        redirect: 'follow'
-      }
-      const response = await fetch(`http://localhost:3000/job-posts/business/${userID}`, requestOptions);
+        method: "GET",
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:3000/job-posts/business/${userID}`,
+        requestOptions
+      );
       if (response.status === 200) {
-        const responseData = await response.json() 
-        setData(responseData.results)
+        const responseData = await response.json();
+        setData(responseData.results);
         console.log(responseData.results);
       }
-  }
+    };
 
-  fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -104,29 +102,79 @@ function JobPosts() {
                       boxShadow: 1,
                     },
                   }}
-                  onClick={() => history.push({
-                    pathname: `/job-posts/${row.ID}`,
-                    state: { detail: {id: row.ID }
-                  }
-                  })}
                 >
                   {JobPostsHeaders.map((column) => {
                     const value = row[column.accessor];
-                    return (
-                      <TableCell
-                        key={column.accessor}
-                        align={
-                          column.accessor === "Description" 
-                            ? "left"
-                            : "center" 
-                        }
-                        sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
-                      >
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
+                    if (column.accessor === "applicants") {
+                      return (
+                        <TableCell key={column.accessor}>
+                          <Tooltip
+                            title="view applicants"
+                            enterDelay={50}
+                            enterNextDelay={50}
+                          >
+                            <IconButton
+                              onClick={() =>
+                                history.push({
+                                  pathname: `/job-posts/${row.ID}`,
+                                  state: { detail: { id: row.ID } },
+                                })
+                              }
+                              aria-label="delete"
+                              size="medium"
+                              sx={{
+                                transition: "0.3s",
+                                "&:hover": {
+                                  boxShadow: 10,
+                                },
+                              }}
+                            >
+                              <GroupAddIcon fontSize="inherit" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      );
+                    } else if (column.accessor === "Salary") {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align={
+                            column.accessor === "Description"
+                              ? "left"
+                              : "center"
+                          }
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          {column.format && typeof value === "number"
+                            ? `$${column.format(value)}`
+                            : `$${value}`}
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align={
+                            column.accessor === "Description"
+                              ? "left"
+                              : "center"
+                          }
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    }
                   })}
                 </TableRow>
               );

@@ -20,14 +20,10 @@ export const JobPostsHeaders = [
     accessor: "DatePosted"
   },
   {
-    HEADER: 'Business',
-    accessor: 'BusinessName'
-  },
-  {
     HEADER: 'Industry',
     accessor: "Industry"
   },
   {
-    accessor: "Apply"
+    accessor: "applicants"
   }
 ]
