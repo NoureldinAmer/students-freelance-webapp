@@ -29,4 +29,25 @@ router.post("/", async (req, res) => {
 }
 })
 
+router.get("/:id/applications", async (req, res) => {
+  try {
+    const { id } = req.params;
+    let queryResult = `
+    SELECT j.JobName, j.Salary, j.Duration, 
+    j.WorkingHours, b.Name, b.Industry, a.applicationDate
+    FROM application AS a, freelancer AS f, 
+    job_post AS j, business AS b
+    WHERE f.ID=a.FID AND a.JID=j.ID 
+    AND j.JobPostOwner=b.ID AND f.ID=?
+    `
+    let stmt = db.prepare(queryResult);
+    const result = stmt.all(id);
+
+    return res.status(200).json({ results: result });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server Error" });
+  }
+});
+
 module.exports = { applyRouter: router };
