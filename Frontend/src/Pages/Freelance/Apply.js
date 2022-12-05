@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Alert, Paper } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
@@ -41,11 +41,11 @@ const CustomSelect = styled(Select)(({ theme }) => ({
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.mode === "dark" ? "white" : null,
     },
-    
   },
 }));
 
 function Apply() {
+  const [errorLabel, setErrorLabel] = useState(false);
   const location = useLocation();
   const history = useHistory();
   const [YOF, setYOF] = useState("");
@@ -65,56 +65,32 @@ function Apply() {
       email: data.get("email"),
       phoneNumber: data.get("phoneNumber"),
       YOF: data.get("YOF"),
-      resumeUrl : data.get("resumeUrl"),
-      additionalInfo : data.get("additionalInfo")
-    } 
+      resumeUrl: data.get("resumeUrl"),
+      additionalInfo: data.get("additionalInfo"),
+    };
     console.log(formInput);
     const raw = JSON.stringify(formInput);
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     let requestOptions = {
-			url: "http://localhost:3000/apply",
-      method: 'POST',
+      url: "http://localhost:3000/apply",
+      method: "POST",
       headers: myHeaders,
       body: raw,
-      redirect: 'follow'
+      redirect: "follow",
     };
 
-    const response = await fetch("http://localhost:3000/apply" , requestOptions);
-    
-    if(response.status === 200) {
+    const response = await fetch("http://localhost:3000/apply", requestOptions);
+
+    if (response.status === 200) {
       const result = await response.json();
       console.log(result);
       history.push("/");
     } else {
+      setErrorLabel(true);
       console.log(response.error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(`JID: ${location.state.detail.id}`);
-      console.log(`FID: ${location.state.detail.id}`);
-      // let requestOptions = {
-      //   url: `http://localhost:3000/job-posts/${location.state.detail.id}`,
-      //   method: "GET",
-      //   redirect: "follow",
-      // };
-      // const response = await fetch(
-      //   `http://localhost:3000/job-posts/${location.state.detail.id}`,
-      //   requestOptions
-      // );
-      // if (response.status === 200) {
-      //   const responseData = await response.json();
-      //   setData(responseData.results);
-      //   console.log(responseData.results);
-      // }
-    };
-
-    fetchData();
-  }, []);
-
-
 
   return (
     <Box
@@ -129,6 +105,12 @@ function Apply() {
       spacing={0}
     >
       <Box pl={15} pr={15}>
+        <Alert
+          severity="error"
+          sx={{ mb: 3, display: errorLabel ? "" : "none" }}
+        >
+          Error in the application, you cannot apply to the application twice
+        </Alert>
         <Typography variant="h5">SUBMIT YOUR APPLICATION</Typography>
         <Box
           component="form"
@@ -139,6 +121,7 @@ function Apply() {
 
           justifyContent="center"
           alignItems={"center"}
+          onFocus={() => setErrorLabel(false)}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -148,7 +131,7 @@ function Apply() {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                inputProps={{autoComplete:'off'}}
+                inputProps={{ autoComplete: "off" }}
               />
             </Grid>
 
@@ -159,8 +142,7 @@ function Apply() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                inputProps={{autoComplete:'off'}}
-
+                inputProps={{ autoComplete: "off" }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -170,7 +152,7 @@ function Apply() {
                 id="email"
                 label="Email Address"
                 name="email"
-                inputProps={{autoComplete:'off'}}
+                inputProps={{ autoComplete: "off" }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -181,7 +163,7 @@ function Apply() {
                 label="Phone"
                 type="phone"
                 id="phoneNumber"
-                inputProps={{autoComplete:'off'}}
+                inputProps={{ autoComplete: "off" }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -226,7 +208,7 @@ function Apply() {
                 id="resumeUrl"
                 label="Resume URL"
                 name="resumeUrl"
-                inputProps={{autoComplete:'off'}}
+                inputProps={{ autoComplete: "off" }}
               />
             </Grid>
             <Grid item xs={12}>

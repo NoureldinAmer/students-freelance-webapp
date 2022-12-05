@@ -111,7 +111,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Alert severity="error" sx={{ display: errorLabel ? "" : "none"}}>Username or Email already exist use different username and/or passowrd</Alert>
+          <Alert severity="error" sx={{ display: errorLabel ? "" : "none"}}>Username or Email already exist use different username and/or email</Alert>
           <Avatar
             sx={{
               m: 1,
