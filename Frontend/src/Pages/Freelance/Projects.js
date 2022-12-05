@@ -115,14 +115,7 @@ function Projects() {
                     return (
                       <TableCell
                         key={column.accessor}
-                        align={
-                          column.accessor === "center"
-                        }
-                        // sx={
-                        //   column.accessor === "DatePosted"
-                        //     ? { width: "10%" }
-                        //     : null
-                        // }
+                        align="center"
                       >
                         {column.format && typeof value === "number"
                           ? column.format(value)
