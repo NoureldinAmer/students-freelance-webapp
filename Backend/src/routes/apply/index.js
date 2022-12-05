@@ -7,28 +7,22 @@ const db = new Database("freelance.db", { verbose: console.log });
 
 router.post("/", async (req, res) => {
   try {
-	const {
-	    JID,
-	    FID,
-	    YOF,
-	    resumeUrl,
-	    additionalInfo
-	  } = req.body;
+    const { JID, FID, YOF, resumeUrl, additionalInfo } = req.body;
     const date = getCurrentDate();
-	
-	  let sql = `
+
+    let sql = `
 	  INSERT INTO application
 	  VALUES (?, ?, ?, ?, ?, ?)
-	  `
-	  stmt = db.prepare(sql);
-	  const result = stmt.run(YOF, resumeUrl, FID, JID, additionalInfo, date);
-	  console.log(result);
+	  `;
+    stmt = db.prepare(sql);
+    const result = stmt.run(YOF, resumeUrl, FID, JID, additionalInfo, date);
+    console.log(result);
     return res.status(200).json({ msg: "successfully added application" });
-} catch (error) {
-	console.log(error);
-  return res.status(400).json({ error: "could not application" });
-}
-})
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error: "could not application" });
+  }
+});
 
 router.get("/:id/applications", async (req, res) => {
   try {
@@ -40,7 +34,7 @@ router.get("/:id/applications", async (req, res) => {
     job_post AS j, business AS b
     WHERE f.ID=a.FID AND a.JID=j.ID 
     AND j.JobPostOwner=b.ID AND f.ID=?
-    `
+    `;
     let stmt = db.prepare(queryResult);
     const result = stmt.all(id);
 
