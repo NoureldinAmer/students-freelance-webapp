@@ -17,6 +17,7 @@ import Apply from "./Pages/Apply";
 import BasicModal from "./Pages/Modal";
 import JobPost from "./Pages/JobPost";
 import Projects from "./Pages/Projects";
+import Applications from "./Pages/Applications";
 
 function App() {
   const [role, setRole] = useState(localStorage.getItem("role"));
@@ -44,6 +45,7 @@ function App() {
                 <Route exact path="/profile" component={Profile} />
                 <Route exact path="/projects" component={Projects} />
                 <Route exact path="/company-profile" component={CompanyProfile} />
+                <Route exact path="/applications" component={Applications} />
                 <Route exact path='*' component ={ErrorPage} />
               </Switch>
             </NavBar>
