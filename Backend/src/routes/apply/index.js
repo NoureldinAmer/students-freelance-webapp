@@ -14,13 +14,14 @@ router.post("/", async (req, res) => {
 	    resumeUrl,
 	    additionalInfo
 	  } = req.body;
+    const date = getCurrentDate();
 	
 	  let sql = `
 	  INSERT INTO application
-	  VALUES (?, ?, ?, ?, ?)
+	  VALUES (?, ?, ?, ?, ?, ?)
 	  `
 	  stmt = db.prepare(sql);
-	  const result = stmt.run(YOF, resumeUrl, FID, JID, additionalInfo);
+	  const result = stmt.run(YOF, resumeUrl, FID, JID, additionalInfo, date);
 	  console.log(result);
     return res.status(200).json({ msg: "successfully added application" });
 } catch (error) {
