@@ -99,6 +99,16 @@ function Applications() {
                 >
                   {ApplicationsHeaders.map((column) => {
                     const value = row[column.accessor];
+                    if(column.accessor === "Salary") {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align="center"
+                        >
+                          {`$${value}`}
+                        </TableCell>
+                      );
+                    }
                     return (
                       <TableCell
                         key={column.accessor}

@@ -22,9 +22,5 @@ export const ApplicationsHeaders = [
   {
     HEADER: 'Industry',
     accessor: "Industry"
-  },
-  {
-    HEADER: 'Industry',
-    accessor: "Industry"
-  },
+  }
 ]

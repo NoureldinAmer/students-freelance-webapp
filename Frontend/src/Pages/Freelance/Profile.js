@@ -27,6 +27,7 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
 function Profile() {
   const history = useHistory();
   const [data, setData] = useState({});
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +42,8 @@ function Profile() {
       if (response.status === 200) {
         const responseData = await response.json() 
         setData(responseData.results)
-        console.log(responseData.results);
+        console.log(responseData.results)
+        setName(`${responseData.results.FirstName} ${responseData.results.LastName}`)
       }
   }
 
@@ -84,7 +86,7 @@ function Profile() {
             }}
           >
             <img
-              src={`https://avatars.dicebear.com/api/initials/First Last.svg?scale=110`}
+              src={`https://avatars.dicebear.com/api/initials/${name}.svg?scale=110`}
               alt="initials"
             />
           </Avatar>
