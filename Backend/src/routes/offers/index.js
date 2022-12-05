@@ -9,7 +9,7 @@ router.get("/:role/:id", async (req, res) => {
     const { id } = req.params;
 
     if (role === "freelancer") {
-      //queryResult = queryFreelancer(id);
+      queryResult = queryFreelancer(id);
     } else if (role === "business") {
       queryResult = queryHiringManager(id);
     } else {
@@ -21,6 +21,21 @@ router.get("/:role/:id", async (req, res) => {
     return res.status(500).json({ error: "Server Error" });
   }
 });
+
+function queryFreelancer(id) {
+  //sql query
+  let sql = `
+  SELECT o.Salary, o.FreelancerStatus, o.ClientStatus,
+  h.First_Name || ' ' || h.Last_Name AS hName, b.Name AS businessName, b.Industry
+  FROM offer AS o, freelancer AS f, hiring_manager AS h, business AS b
+  WHERE o.FID = f.ID AND h.ID=o.HID AND h.worksFor = b.ID
+  AND f.ID=?
+  `
+  let stmt = db.prepare(sql);
+  const result = stmt.all(id);
+  return result;
+}
+
 
 /**
  * perform sql query to get the profile details of the hiring manager and
