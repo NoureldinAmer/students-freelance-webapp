@@ -11,7 +11,7 @@ const db = new Database("freelance.db", { verbose: console.log });
  * @returns {object} - returns user details if user exists,
  * else returns a 400 response status
  */
-router.get("/:id", async (req, res) => {
+router.get("/:fid", async (req, res) => {
   try {
     const { id } = req.params;
     let queryResult = `
@@ -25,6 +25,32 @@ router.get("/:id", async (req, res) => {
     let stmt = db.prepare(queryResult);
     const result = stmt.all(id);
 
+    return res.status(200).json({ results: result });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Server Error" });
+  }
+});
+
+/**
+ * Handle get request, queries the database to get the profile details of the
+ * provided user
+ * @param role - from req.params
+ * @param id - from req.params
+ * @returns {object} - returns user details if user exists,
+ * else returns a 400 response status
+ */
+ router.get("/:pid/contributors", async (req, res) => {
+  try {
+    const { pid } = req.params;
+    let queryResult = `
+    SELECT f.FirstName || ' ' || f.LastName AS Name, f.Username, f.Email, f.PhoneNo, f.Location
+    FROM project AS p, freelancer AS f, worked_on AS w
+    WHERE w.PID = p.ID AND w.FID = f.ID 
+    AND p.ID=?
+    `
+    let stmt = db.prepare(queryResult);
+    const result = stmt.all(pid);
     return res.status(200).json({ results: result });
   } catch (error) {
     console.log(error);
