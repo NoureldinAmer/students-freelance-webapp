@@ -20,8 +20,8 @@ export const CompanyTableHeaders = [
     accessor: "deadline"
   },
   //add at the end if there is time
-  // {
-  //   HEADER: 'Contributors',
-  //   accessor: "contributors"
-  // }
+  {
+    HEADER: 'Contributors',
+    accessor: "contributors"
+  }
 ]

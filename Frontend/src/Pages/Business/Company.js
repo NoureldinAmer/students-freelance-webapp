@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -6,12 +7,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 import { CompanyTableHeaders } from "./CompanyTableHeaders";
 import { useHistory } from "react-router-dom";
+import GroupIcon from "@mui/icons-material/Group";
 
 const Job = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
@@ -35,7 +38,7 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
-  fontWeight: "bold"
+  fontWeight: "bold",
 }));
 
 function Company() {
@@ -44,24 +47,26 @@ function Company() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userID = localStorage.getItem('userID');
+      const userID = localStorage.getItem("userID");
 
       let requestOptions = {
         url: `http://localhost:3000/profile/${userID}`,
-        method: 'GET',
-        redirect: 'follow'
-      }
-      const response = await fetch(`http://localhost:3000/profile/${userID}`, requestOptions);
+        method: "GET",
+        redirect: "follow",
+      };
+      const response = await fetch(
+        `http://localhost:3000/profile/${userID}`,
+        requestOptions
+      );
       if (response.status === 200) {
-        const responseData = await response.json() 
-        setData(responseData.results)
+        const responseData = await response.json();
+        setData(responseData.results);
         console.log(responseData.results);
       }
-  }
+    };
 
-  fetchData()
+    fetchData();
   }, []);
-
 
   return (
     <Box
@@ -106,21 +111,64 @@ function Company() {
                 >
                   {CompanyTableHeaders.map((column) => {
                     const value = row[column.accessor];
-                    return (
-                      <TableCell
-                        key={column.accessor}
-                        align={
-                          column.accessor === "Description" 
-                            ? "left"
-                            : "center" 
-                        }
-                        sx={column.accessor === "DatePosted" ? {width: "10%"} : null}
-                      >
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
+                    if (column.accessor === "contributors") {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align="center"
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          <Tooltip
+                            title="view applicants"
+                            enterDelay={250}
+                            enterNextDelay={250}
+                          >
+                            <IconButton
+                              onClick={() =>
+                                history.push({
+                                  pathname: `/projects/${row.ID}/contributors`,
+                                  state: { detail: { id: row.ID } },
+                                })
+                              }
+                              aria-label="delete"
+                              size="medium"
+                              sx={{
+                                transition: "0.3s",
+                                "&:hover": {
+                                  boxShadow: 10,
+                                },
+                              }}
+                            >
+                              <GroupIcon fontSize="inherit" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align={
+                            column.accessor === "Description"
+                              ? "left"
+                              : "center"
+                          }
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    }
                   })}
                 </TableRow>
               );
@@ -129,7 +177,7 @@ function Company() {
         </MyTable>
       </TableContainer>
     </Box>
-  )
+  );
 }
 
-export default Company
+export default Company;

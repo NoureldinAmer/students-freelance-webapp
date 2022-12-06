@@ -10,8 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
-import { OffersHeaders } from "./OffersHeaders";
-import { useHistory } from "react-router-dom";
+import { ProjectContributorsHeaders } from "./ProjectContributorsHeaders";
+import { useHistory, useLocation } from "react-router-dom";
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
@@ -30,20 +30,20 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold"
 }));
 
-function Offers() {
+function ProjectContributors() {
+  const location = useLocation();
   const [data, setData] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
       const userID = localStorage.getItem('userID');
 
       let requestOptions = {
-        url: `http://localhost:3000/offers/business/${userID}`,
+        url: `http://localhost:3000/projects/${location.state.detail.id}/contributors`,
         method: 'GET',
         redirect: 'follow'
       }
-      const response = await fetch(`http://localhost:3000/offers/business/${userID}`, requestOptions);
+      const response = await fetch(`http://localhost:3000/projects/${location.state.detail.id}/contributors`, requestOptions);
       if (response.status === 200) {
         const responseData = await response.json() 
         setData(responseData.results)
@@ -70,7 +70,7 @@ function Offers() {
         <MyTable sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              {OffersHeaders.map((column) => (
+              {ProjectContributorsHeaders.map((column) => (
                 <HeaderTableCell
                   key={column.accessor}
                   style={{ minWidth: column.minWidth }}
@@ -95,7 +95,7 @@ function Offers() {
                     },
                   }}
                 >
-                  {OffersHeaders.map((column) => {
+                  {ProjectContributorsHeaders.map((column) => {
                     const value = row[column.accessor];
                     return (
                       <TableCell
@@ -119,4 +119,4 @@ function Offers() {
   );
 }
 
-export default Offers;
+export default ProjectContributors;
