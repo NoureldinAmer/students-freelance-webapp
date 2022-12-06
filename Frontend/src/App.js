@@ -18,6 +18,7 @@ import BasicModal from "./Pages/Modal";
 import JobPost from "./Pages/JobPost";
 import Projects from "./Pages/Projects";
 import Applications from "./Pages/Applications";
+import Contributors from "./Pages/ProjectContributors";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 <Route exact path="/projects" component={Projects} />
                 <Route exact path="/company-profile" component={CompanyProfile} />
                 <Route exact path="/applications" component={Applications} />
+                <Route exact path="/projects/:id/contributors" component={Contributors} />
                 <Route exact path='*' component ={ErrorPage} />
               </Switch>
             </NavBar>
