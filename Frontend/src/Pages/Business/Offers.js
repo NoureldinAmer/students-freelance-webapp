@@ -11,7 +11,6 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 import { OffersHeaders } from "./OffersHeaders";
-import { useHistory } from "react-router-dom";
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
@@ -32,7 +31,6 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
 
 function Offers() {
   const [data, setData] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {

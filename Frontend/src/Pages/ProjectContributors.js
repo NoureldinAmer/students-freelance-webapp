@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 import { ProjectContributorsHeaders } from "./ProjectContributorsHeaders";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
@@ -36,8 +36,6 @@ function ProjectContributors() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userID = localStorage.getItem('userID');
-
       let requestOptions = {
         url: `http://localhost:3000/projects/${location.state.detail.id}/contributors`,
         method: 'GET',

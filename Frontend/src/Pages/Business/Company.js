@@ -16,14 +16,6 @@ import { CompanyTableHeaders } from "./CompanyTableHeaders";
 import { useHistory } from "react-router-dom";
 import GroupIcon from "@mui/icons-material/Group";
 
-const Job = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "red",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
-
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
   ...theme.typography.body2,

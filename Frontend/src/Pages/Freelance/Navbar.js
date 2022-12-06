@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { createTheme, styled, useTheme } from "@mui/material/styles";
+import { createTheme, styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -23,7 +23,6 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { ThemeProvider } from "@emotion/react";
 import { Paper } from "@mui/material";
-import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -47,25 +46,6 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -173,7 +153,7 @@ export default function Navbar(props) {
             height: "64px",
             boxShadow: 2,
             bgcolor:
-              theme.palette.mode == "light"
+              theme.palette.mode === "light"
                 ? "secondary.light"
                 : "secondary.dark",
           }}
@@ -188,7 +168,7 @@ export default function Navbar(props) {
                 marginRight: 5,
                 ...(open && { display: "none" }),
                 color:
-                  theme.palette.mode == "light"
+                  theme.palette.mode === "light"
                     ? "sideBarIcons.light"
                     : "sideBarIcons.dark",
               }}
@@ -201,7 +181,7 @@ export default function Navbar(props) {
               component="div"
               sx={{
                 color:
-                  theme.palette.mode == "light"
+                  theme.palette.mode === "light"
                     ? "sideBarText.light"
                     : "sideBarText.dark",
               }}
@@ -218,11 +198,11 @@ export default function Navbar(props) {
           PaperProps={{
             sx: {
               bgcolor:
-                theme.palette.mode == "light"
+                theme.palette.mode === "light"
                   ? "secondary.light"
                   : "secondary.dark",
               color:
-                theme.palette.mode == "light"
+                theme.palette.mode === "light"
                   ? "sideBarText.light"
                   : "sideBarText.dark",
             },
@@ -269,7 +249,7 @@ export default function Navbar(props) {
                     "&:hover": {
                       backgroundColor:
                         route.title === toolbarHeader
-                          ? theme.palette.mode == "light"
+                          ? theme.palette.mode === "light"
                             ? "sideBarText.hoverLight"
                             : "sideBarText.hoverDark"
                           : null,
@@ -285,10 +265,10 @@ export default function Navbar(props) {
                       justifyContent: "center",
                       color:
                         route.title === toolbarHeader
-                          ? theme.palette.mode == "light"
+                          ? theme.palette.mode === "light"
                             ? "sideBarIcons.selectedLight"
                             : "sideBarIcons.selectedDark"
-                          : theme.palette.mode == "light"
+                          : theme.palette.mode === "light"
                           ? "sideBarIcons.light"
                           : "sideBarIcons.dark",
                     }}
@@ -325,7 +305,7 @@ export default function Navbar(props) {
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
                     color:
-                      theme.palette.mode == "light"
+                      theme.palette.mode === "light"
                         ? "sideBarIcons.light"
                         : "sideBarIcons.dark",
                   }}
@@ -349,7 +329,7 @@ export default function Navbar(props) {
               border: "none",
               borderRadius: 0,
               backgroundColor:
-                theme.palette.mode == "light" ? "#e6e9ed" : "#0B1929",
+                theme.palette.mode === "light" ? "#e6e9ed" : "#0B1929",
             }}
           >
             {props.children}
