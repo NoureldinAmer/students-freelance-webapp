@@ -1,4 +1,5 @@
 import {
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -6,11 +7,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import styled from "@emotion/styled";
 import { ProjectsHeaders } from "./ProjectsHeaders";
+import GroupIcon from "@mui/icons-material/Group";
+import { useHistory } from "react-router-dom";
 
 const MyTable = styled(Table)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#18385C" : "white",
@@ -31,6 +35,7 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
 
 function Projects() {
   const [data, setData] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,16 +104,52 @@ function Projects() {
                 >
                   {ProjectsHeaders.map((column) => {
                     const value = row[column.accessor];
-                    return (
-                      <TableCell
-                        key={column.accessor}
-                        align="center"
-                      >
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
+                    if (column.accessor === "contributors") {
+                      return (
+                        <TableCell
+                          key={column.accessor}
+                          align="center"
+                          sx={
+                            column.accessor === "DatePosted"
+                              ? { width: "10%" }
+                              : null
+                          }
+                        >
+                          <Tooltip
+                            title="view applicants"
+                            enterDelay={250}
+                            enterNextDelay={250}
+                          >
+                            <IconButton
+                              onClick={() =>
+                                history.push({
+                                  pathname: `/projects/${row.ID}/contributors`,
+                                  state: { detail: { id: row.ID } },
+                                })
+                              }
+                              aria-label="delete"
+                              size="medium"
+                              sx={{
+                                transition: "0.3s",
+                                "&:hover": {
+                                  boxShadow: 10,
+                                },
+                              }}
+                            >
+                              <GroupIcon fontSize="inherit" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      );
+                    } else {
+                      return (
+                        <TableCell key={column.accessor} align="center">
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    }
                   })}
                 </TableRow>
               );

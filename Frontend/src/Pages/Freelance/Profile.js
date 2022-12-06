@@ -71,7 +71,6 @@ function Profile() {
       <CustomBox
         sx={{
           width: 500,
-          height: 600,
           boxShadow: 3,
           marginBottom: 10,
           borderRadius: "20px",
