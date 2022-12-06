@@ -13,7 +13,7 @@ const db = new Database("freelance.db", { verbose: console.log });
  */
 router.get("/:fid", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { fid } = req.params;
     let queryResult = `
     SELECT p.ID, p.completionStatus, p.payStatus, p.startDate, p.deadline,
     b.Name AS businessName, b.Industry
@@ -23,7 +23,7 @@ router.get("/:fid", async (req, res) => {
     AND p.projectOwner = b.ID
     `
     let stmt = db.prepare(queryResult);
-    const result = stmt.all(id);
+    const result = stmt.all(fid);
 
     return res.status(200).json({ results: result });
   } catch (error) {
