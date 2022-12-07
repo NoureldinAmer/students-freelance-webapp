@@ -4,7 +4,6 @@ import { Stack } from "@mui/system";
 import { Avatar, IconButton, Tooltip, Typography } from "@mui/material";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import DescriptionIcon from '@mui/icons-material/Description';
-import CreateIcon from "@mui/icons-material/Create";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
