@@ -5,6 +5,16 @@ const { uuid } = require("../../utils/GenerateID");
 const { getCurrentDate } = require("../../utils/Date");
 const db = new Database("freelance.db", { verbose: console.log });
 
+/**
+ * apply to a job post
+ * @param JID - job id
+ * @param FID - freelancer id
+ * @param YOF - years of experience
+ * @param resumeUrl - link to url
+ * @param additionalInfo - additional info to add to the application
+ * @returns {object} - returns successful message if application added, else return
+ * error msg
+ */
 router.post("/", async (req, res) => {
   try {
     const { JID, FID, YOF, resumeUrl, additionalInfo } = req.body;
@@ -24,6 +34,10 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * returns all applications owned by the freelancer
+ * @param id - freelancer id
+ */
 router.get("/:id/applications", async (req, res) => {
   try {
     const { id } = req.params;

@@ -3,6 +3,10 @@ const router = Router();
 const Database = require("better-sqlite3");
 const db = new Database("freelance.db", { verbose: console.log });
 
+/**
+ * Handle get request, to view the offers owned by a user
+ * @param - role (either a freelancer, hiring manager)
+ */
 router.get("/:role/:id", async (req, res) => {
   try {
     const { role } = req.params;
@@ -22,6 +26,10 @@ router.get("/:role/:id", async (req, res) => {
   }
 });
 
+/**
+ * get the offers owned by the freelancer
+ * @param {string} id - freelancer id
+ */
 function queryFreelancer(id) {
   //sql query
   let sql = `
@@ -38,10 +46,8 @@ function queryFreelancer(id) {
 
 
 /**
- * perform sql query to get the profile details of the hiring manager and
- * the company details, the hiring manager works for
- * @param {string} id - id of hiring manager
- * @returns {object} - return result of sql query
+ * get the offers owned by the hiring manager
+ * @param {string} id - hiring manager id
  */
 function queryHiringManager(id) {
   let sql; // for sql statements

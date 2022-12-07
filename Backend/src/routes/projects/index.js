@@ -4,12 +4,11 @@ const Database = require("better-sqlite3");
 const db = new Database("freelance.db", { verbose: console.log });
 
 /**
- * Handle get request, queries the database to get the profile details of the
- * provided user
- * @param role - from req.params
- * @param id - from req.params
- * @returns {object} - returns user details if user exists,
- * else returns a 400 response status
+ * Handle get request, queries the database to get the projects that the freelancer
+ * worked on
+ * @param fid - freelancer id
+ * @returns {object} - returns an array of projects that the freelancer worked
+ * on
  */
 router.get("/:fid", async (req, res) => {
   try {
@@ -33,14 +32,11 @@ router.get("/:fid", async (req, res) => {
 });
 
 /**
- * Handle get request, queries the database to get the profile details of the
- * provided user
- * @param role - from req.params
- * @param id - from req.params
- * @returns {object} - returns user details if user exists,
- * else returns a 400 response status
+ * Handle get request, queries the database to get the freelancers who worked on
+ * the project
+ * @param pid - project ID
  */
- router.get("/:pid/contributors", async (req, res) => {
+router.get("/:pid/contributors", async (req, res) => {
   try {
     const { pid } = req.params;
     let queryResult = `

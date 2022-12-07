@@ -37,12 +37,9 @@ router.get("/:role/:id", async (req, res) => {
 });
 
 /**
- * Handle get request, queries the database to get the profile details of the
- * provided user
- * @param role - from req.params
- * @param id - from req.params
- * @returns {object} - returns user details if user exists,
- * else returns a 400 response status
+ * Handle get request, queries the database to get the projects owned by 
+ * a business
+ * @param HID - hiring manager ID
  */
 router.get("/:HID", async (req, res) => {
   try {

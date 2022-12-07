@@ -56,10 +56,14 @@ router.get("/:jobID", async (req, res) => {
 });
 
 /**
- * Handle login post request, validate login credentials
- * @param username - from req.body
- * @param password - from req.body
- * @returns {object} - returns user if user exists, else returns a 400 response status
+ * Handle job-post post request, creates a job-post
+ * @param HID - hiring manager id
+ * @param jobName - Name of the job post 
+ * @param duration - duration of the job post
+ * @param locations - locations of the job post
+ * @param salary - skills required by the job post
+ * @param desciption - description of the job post 
+ * @param workingHours - working hours required by the job post
  */
 router.post("/create", async (req, res) => {
   try {

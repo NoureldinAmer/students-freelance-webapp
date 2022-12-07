@@ -71,6 +71,11 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * Insert freelancer into database
+ * @param {object} freelanceInfo 
+ * @returns freelancer ID
+ */
 function freelancerSignUp(freelanceInfo) {
   try {
     const {
@@ -107,6 +112,11 @@ function freelancerSignUp(freelanceInfo) {
   }
 }
 
+/**
+ * Insert hiring manager and business into database
+ * @param {object} freelanceInfo 
+ * @returns hiring manager ID
+ */
 function businessSignUp(businessInfo) {
   try {
 	const {
