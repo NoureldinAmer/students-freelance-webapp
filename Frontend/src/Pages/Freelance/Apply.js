@@ -80,7 +80,7 @@ function Apply() {
     if (response.status === 200) {
       const result = await response.json();
       console.log(result);
-      history.push("/");
+      history.push("/applications");
     } else {
       setErrorLabel(true);
       console.log(response.error);
