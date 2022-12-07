@@ -7,6 +7,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import CreateIcon from "@mui/icons-material/Create";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import styled from "@emotion/styled";
 import { useHistory } from "react-router-dom";
 
@@ -149,7 +150,7 @@ function Profile() {
             width={"100%"}
           >
             <Tooltip
-              title="explore new job posts"
+              title="explore my offers"
               enterDelay={500}
               enterNextDelay={500}
             >
@@ -163,7 +164,7 @@ function Profile() {
                     bgcolor: "inherit",
                   },
                 }}
-                onClick={() => history.push("/job-posts")}
+                onClick={() => history.push("/offers")}
               >
                 <LocalOfferOutlinedIcon fontSize="inherit" />
               </CustomIconButton>
@@ -189,7 +190,7 @@ function Profile() {
               </CustomIconButton>
             </Tooltip>
             <Tooltip
-              title="apply to job posts"
+              title="view my projects"
               enterDelay={1000}
               enterNextDelay={1000}
             >
@@ -203,9 +204,9 @@ function Profile() {
                     bgcolor: "inherit",
                   },
                 }}
-                onClick={() => history.push("/apply")}
+                onClick={() => history.push("/projects")}
               >
-                <CreateIcon fontSize="inherit" />
+                <AccountTreeIcon fontSize="inherit" />
               </CustomIconButton>
             </Tooltip>
             <Tooltip title="explore jobs" enterDelay={500} enterNextDelay={500}>

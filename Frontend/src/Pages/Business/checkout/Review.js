@@ -50,7 +50,7 @@ export default function Review({ formData }) {
         <Box>
           <FormHelperText>Enter your desired locations</FormHelperText>
           <TagsInput
-            tags={["Obama", "Balls"]}
+            tags={[]}
             formData={formData}
             name={"locations"}
           />

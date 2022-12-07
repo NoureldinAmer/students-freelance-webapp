@@ -14,7 +14,7 @@ export default function PaymentForm({formData}) {
         Skills
       </Typography>
       <Box>
-        <TagsInput tags={["Obama", "Balls"]} formData={formData} name={"skills"}/>
+        <TagsInput tags={[]} formData={formData} name={"skills"}/>
       </Box>
     </React.Fragment>
   );
