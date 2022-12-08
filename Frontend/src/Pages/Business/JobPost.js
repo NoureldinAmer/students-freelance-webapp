@@ -35,7 +35,7 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 function JobPosts() {
-  const [data, setData] = useState(JobPostsDummy);
+  const [data, setData] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
